@@ -11,7 +11,7 @@ class ProductionConfig(Config):
     DEBUG = False
     HOST = '154.41.228.96'
     PORT = 5000
-
+    VIDEO_DIR = r'/mohamd/Edo-Tensei/flaskServer/client/video'
 
 
 
