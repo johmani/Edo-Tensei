@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests"> -->
+
+    <!----======== CSS ======== -->
+    <link rel="stylesheet" href="/static/css/index_style.css" />
+    <link rel="stylesheet" href="/static/css/style.css" />
+    <link rel="stylesheet" href="/static/css/popup.css" />
+
+    <!----===== Boxicons  CSS ===== -->
+    <link rel="stylesheet" href="https://unpkg.com/boxicons@2.1.1/css/boxicons.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css">
+
+    <title>test</title>
+</head>
+
+<body>
+    <div class="app-container">
+        <div class="app-content">
+
+            <nav class="app-content-header">
+
+                <a href="/" class="tool-switch" id="back" title="Switch Theme"
+                    style="margin-left: 0; text-decoration: none;">
+                    <i class="tool fa-regular fa-circle-left fa-fade"></i>
+                </a>
+
+                <div class="header-content-actions-wrapper">
+
+                    <button class="tool-switch" id="importButton" title="Switch Theme">
+                        <i class="tool fa-regular fa-image"></i>
+                    </button>
+
+                    <button class="tool-switch" id="pencilButton" title="Switch Theme">
+                        <i class="tool  bx bx-paint icon"></i>
+                    </button>
+
+                    <button class="tool-switch" id="textButton" title="Switch Theme">
+                        <i class="tool bx bx-text icon"></i>
+                    </button>
+
+                    <button class="tool-switch" id="moveButton" title="Switch Theme">
+                        <i class="tool bx bx-move icon"></i>
+                    </button>
+
+                    <button class="tool-switch" id="applyButton" title="Switch Theme">
+                        <i class="tool bx bx-rocket icon"></i>
+                    </button>
+
+
+                    <!-- <button class="mode-switch" title="Switch Theme">
+                        <svg class="moon" fill="none" stroke="currentColor" stroke-linecap="round"
+                            stroke-linejoin="round" stroke-width="2" width="24" height="24" viewBox="0 0 24 24">
+                            <defs></defs>
+                            <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
+                        </svg>
+                    </button> -->
+                </div>
+            </nav>
+
+            <div class="main-content">
+                <div class="draw-area-wrapper draw-area">
+
+                    <input type="file" id="fileInput" accept="image/*" style="display: none;">
+                    <canvas class="veiw-port" id="veiw-port"></canvas>
+
+                </div>
+
+                <div class="app-content-actions-wrapper">
+
+                    <div class="properties" id="pencilProperties">
+
+                        <!-- <div class="title">main setting</div> -->
+                        <div class="list-veiw" style="height: 100px;">
+                            <div class="prop">
+                                <a class="text">color</a>
+                                <input class="color" type="color" name="colorPicker" id="colorPicker">
+                            </div>
+                            <div class="prop">
+                                <a class="text">size</a>
+                                <input class="slider" id="pencil-size-slider" type="range" min="1" max="100"
+                                    value="4" />
+                                <div class="value" id="pencil-size-value">4</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="properties" id="textProperties">
+
+                        <!-- <div class="title">main setting</div> -->
+                        <div class="list-veiw">
+
+                            <textarea class="inputField" id="inputText" name="inputText" rows="3" cols="0"></textarea>
+                            <div class="prop">
+                                <a class="text">color</a>
+                                <input class="color" type="color" id="textColorPicker1" name="colorPicker">
+                                <input class="color" type="color" id="textColorPicker2" name="colorPicker">
+                                <input class="checkbox" type="checkbox" id="checkBoxGradient" name="checkBoxGradient" />
+                                <label class="text" for="checkBoxGradient"><span></span>gradient</label>
+                            </div>
+
+                            <div class="prop" id="textSizeSlider">
+                                <div class="text">size</div>
+                                <input type="range" id="text-size-slider" min="1" max="780" value="72" />
+                                <div class="value" id="text-size-value">72</div>
+                            </div>
+
+                            <select class="dropList" id="fontSelector">
+                                <option value="Arial">Arial</option>
+                                <option value="Times New Roman">Times New Roman</option>
+                                <option value="Courier New">Courier New</option>
+                                <option value="Verdana">Verdana</option>
+                                <option value="Comic Sans MS">Comic Sans MS</option>
+                                <option value="Calibri">Calibri</option>
+                                <option value="Tahoma">Tahoma</option>
+                                <option value="Trebuchet MS">Trebuchet MS</option>
+                                <option value="Georgia">Georgia</option>
+                                <option value="Garamond">Garamond</option>
+                                <option value="Brush Script MT">Brush Script MT</option>
+                            </select>
+                        </div>
+
+
+
+                    </div>
+
+                    <div class="properties active" id="layer">
+                        <div class="title">item list</div>
+                        <ul class="list-veiw" id="textContainer">
+
+                        </ul>
+                    </div>
+                </div>
+
+   
+            </div>
+
+            <div class="popup" id="progress">
+            
+                <a href="#" class="cancelButton"> <i id="cancelButton" class="bx bx-x icon"></i> </a>
+                <div class="outer">
+                    <div class="inner">
+
+                        <svg class="svg" xmlns="http://www.w3.org/2000/svg" version="1.1" width="200px"
+                            height="200px">
+                            <defs>
+                                <linearGradient id="GradientColor">
+                                    <stop offset="0%" stop-color="#2869ff" />
+                                    <stop offset="100%" stop-color="#6291fd" />
+                                </linearGradient>
+                            </defs>
+                            <circle class="circle" id="process" cx="100px" cy="100px" r="92"
+                                stroke-linecap="round" />
+                        </svg>
+
+                        <div class="processNumber" id="processNumber"> 0% </div>
+
+                        <a href="/download_pragmata_girl" download="nameplate_girl.mp4" class="downLoad"
+                            id="downLoad" download="hi">
+                            <i class="bx bx-download icon"></i>
+                        </a>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+<script src="/static/js/Vector2.js"></script>
+<script src="/static/js/utilities.js"></script>
+<script src="/static/js/CanvasObject.js"></script>
+<script src="/static/js/Element.js"></script>
+<script src="/static/js/SketchTool.js"></script>
+<script src="/static/js/TextTool.js"></script>
+<script src="/static/js/SelectionTool.js"></script>
+<script src="/static/js/importTool.js"></script>
+<script src="/static/js/canvas.js"></script>
+<script src="/static/js/UIEvents.js"></script>
+<script src="/static/js/Server.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+</html>

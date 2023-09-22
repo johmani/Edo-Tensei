@@ -1,0 +1,124 @@
+.popup {
+    
+    border-radius: 10px;
+    background-color: var(--app-bg);
+    box-shadow: var(--filter-shadow);
+    display: none;
+    align-content: center;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+
+    padding: 10%;
+
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+    .cancelButton{
+        color: var(--action-color-hover);
+        position: absolute;
+        right: 10px;
+        top: 10px;
+        font-size: 40px;
+
+        padding-right: 10px;
+    }
+    .cancelButton:hover{
+        color:  var(--action-color);
+    }
+
+    .outer {
+        display: flex;
+        align-content: center;
+        justify-content: center;
+        align-items: center;
+
+        width: 200px;
+        height: 200px;
+        background-color: var(--app-bg);
+
+        box-shadow: inset 0px 0px 5px 5px rgba(0, 0, 0, 0.15);
+
+        border-radius: 50%;
+    }
+
+    .inner {
+        display: flex;
+        align-content: center;
+        justify-content: center;
+        align-items: center;
+
+        width: 170px;
+        height: 170px;
+        background-color: var(--app-bg);
+        box-shadow: 0px 0px 3px 3px rgba(0, 0, 0, 0.15);
+        border-radius: 50%;
+
+
+        
+
+        .svg {
+            position: absolute;
+
+            .circle {
+                margin: 10px;
+                fill: none;
+                stroke: url(#GradientColor);
+                stroke-width: 7px;
+                stroke-dasharray: 578;
+                stroke-dashoffset: 578;
+            }
+        }
+
+        .processNumber {
+            display: none;
+            font-weight: 600px;
+            color: var(--action-color-hover);
+        }
+
+        .processNumber.active{
+            display :flex;
+        }
+
+        .downLoad {
+            position: relative;
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            box-shadow: 0px 0px 10px var(--action-color-hover);
+            display: none;
+            border: 1px solid var(--action-color-hover);
+            text-decoration: none;
+            align-content: center;
+            justify-content: center;
+            align-items: center;
+
+            .bx {
+                font-size: 50px;
+                color: var(--action-color-hover);
+                padding: 0;
+            }
+        }
+        .downLoad.active{
+            display :flex;
+        }
+
+        .downLoad:hover {
+            box-shadow: 0px 0px 10px var(--action-color);
+            border: 1px solid var(--action-color);
+
+            .bx {
+                font-size: 50px;
+                color: var(--action-color);
+                padding: 0;
+            }
+        }
+    }
+}
+
+
+
+.popup.active{
+    display :flex;
+}

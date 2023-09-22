@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>test stuff</title>
+    <link rel="stylesheet" href="/static/css/index_style.css" media="screen">
+
+    <!----===== Boxicons  CSS ===== -->
+    <link rel="stylesheet" href="https://unpkg.com/boxicons@2.1.1/css/boxicons.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css">
+
+</head>
+
+<body>
+    <div class="app-container">
+        <div class="app-content">
+            <nav class="app-content-header">
+                <!-- <img src="/static/images/logo_inv.png" style="width: 20px;height: 30px; margin: 0px 10px 0px 0px;"> -->
+                <h1 class="app-content-headerText">Edo Tensei</h1>
+                
+                <div class="app-content-actions-wrapper">
+
+                    <a href="/" class="nav-item">Home</a>
+                    <a href="about" class="nav-item">About</a>
+
+                    <!-- <button class="mode-switch" title="Switch Theme">
+                        <svg class="moon" fill="none" stroke="currentColor" stroke-linecap="round"
+                            stroke-linejoin="round" stroke-width="2" width="24" height="24" viewBox="0 0 24 24">
+                            <defs></defs>
+                            <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
+                        </svg>
+                    </button> -->
+
+                </div>
+            </nav>
+            <div class="app-content-actions">
+                
+                <input class="search-bar non-interactable" placeholder="Search..." type="text">
+
+                <div class="app-content-actions-wrapper">
+                  
+                    <div class="filter-button-wrapper non-interactable">
+                        <button class="action-button filter jsFilter"><span>Filter</span><svg
+                                xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round" class="feather feather-filter">
+                                <polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3" />
+                            </svg></button>
+                        <div class="filter-menu">
+                            <label>Category</label>
+                            <select>
+                                <option>All Categories</option>
+                                <option>Furniture</option>
+                                <option>Decoration</option>
+                                <option>Kitchen</option>
+                                <option>Bathroom</option>
+                            </select>
+                            <label>Status</label>
+                            <select>
+                                <option>All Status</option>
+                                <option>Active</option>
+                                <option>Disabled</option>
+                            </select>
+                            <div class="filter-menu-buttons">
+                                <button class="filter-button reset">
+                                    Reset
+                                </button>
+                                <button class="filter-button apply">
+                                    Apply
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <div class="products-area-wrapper gridView">
+
+                
+                <div class="products-row">
+                    <div class="product-cell image">
+                        <a href="pragmataGirl">
+                            <img src="/static/images/pragmata girl.png" alt="product">
+                        </a>
+                        <span>Pragmata girl</span>
+                    </div>
+
+                    <!-- <div class="product-cell info">
+                        <div class="info">
+                            <i id="download" class="bx bx-download icon"></i>
+                            <span class="cell-label">0</span>
+                        </div>
+
+                        <div class="info">
+                            <i id="like" class="bx bx-like icon"></i>
+                            <span class="cell-label">0</span>
+                        </div>
+                        
+                        <div class="info">
+                            <i id="dislike" class="bx bx-dislike icon"></i>
+                            <span class="cell-label">0</span>
+                        </div>
+                    </div> -->
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+</body>
+<script src="/static/js/animationPage.js"></script>
+
+</html>

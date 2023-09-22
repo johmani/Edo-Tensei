@@ -1,0 +1,311 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+
+.tool-switch {
+    color: var(--app-content-main-color);
+    font-size: 25px;
+    line-height: 32px;
+    margin: 0px 0px 0px 20px;
+    background-color: transparent;
+    border: none;
+    padding: 0;
+    color: var(--app-content-main-color);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+
+    .tool {
+        fill: var(--app-content-main-color);
+    }
+
+    .tool:hover {
+        fill: var(--action-color-hover);
+        color: var(--action-color-hover);
+    }
+}
+
+.tool-switch.active{
+    .tool {
+        fill: var(--action-color);
+        color: var(--action-color);
+    }
+}
+
+.header-content-actions-wrapper {
+    display: flex;
+    align-items: center;
+    background-color: var(--app-content-secondary-color);
+    padding: 10px;
+    border-radius: 10px;
+    box-shadow: var(--filter-shadow);
+}
+
+.app-content-actions-wrapper {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    padding: 5px 0px 5px 0px;
+    font-size: 14px;
+}
+
+.main-content {
+    display: flex;
+    flex-direction: row-reverse;
+
+    .app-content-actions-wrapper {
+        width: 20%;
+        margin: 0px 5px 0px 0px;
+
+        #textContainer{
+            height: 350px;
+        }
+    }
+}
+
+@media screen and (max-width: 1024px) {
+    .main-content {
+        flex-direction: row-reverse;
+
+        .app-content-actions-wrapper {
+            width: 20%;
+
+            #textContainer{
+                height: 150px;
+            }
+        }
+    }
+}
+
+@media screen and (max-width: 820px) {
+    .main-content {
+        flex-direction: column;
+
+        .app-content-actions-wrapper {
+            width: 100%;
+
+            #textContainer{
+                height: 150px;
+            }
+        }
+    }
+}
+
+@media screen and (max-width: 520px) {
+    .main-content {
+        flex-direction: column;
+
+        .app-content-actions-wrapper {
+            width: 100%;
+
+            #textContainer{
+                height: 100px;
+            }
+        }
+    }
+}
+
+
+
+
+
+.draw-area-wrapper {
+    width: 100%;
+    max-height: 100%;
+    overflow: auto;
+    padding: 0;
+
+}
+
+.draw-area {
+    /* background-color: #da0303; */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0;
+}
+
+.veiw-port {
+    background-color: #03dac6;
+    width: 100%;
+    max-width: 1460px;
+    max-height: 780px;
+    touch-action: none;
+    margin-top: 10px;
+}
+
+.title {
+    border: 1px solid var(--action-color-hover);
+    color: var(--app-content-main-color);
+    border-radius: 15px 15px 0px 0px;
+    box-shadow: 0px 0px 3px var(--action-color-hover);
+    padding: 5px;
+    margin: 5px;
+    display: flex;
+    justify-content: center;
+    margin-bottom: 0;
+}
+
+
+.properties {
+    overflow: hidden;
+    transition: 1s;
+    max-width: 0px;
+    max-height: 0px;
+
+    color: var(--tertiary-color);
+    border-radius: 15px;
+    display: flex;
+    flex-direction: column;
+
+    padding: 5px;
+    margin-top: 5px;
+    width: 100%;
+
+    .list-veiw {
+
+        overflow-y: scroll;
+        margin-top: 0;
+        width: 100%;
+        overflow-y: scroll;
+        padding: 5px;
+        /* height: 150px; */
+        /* width: 100%; */
+        color: var(--app-content-main-color);
+
+        .inputField {
+            width: 95%;
+            border: 1px solid var(--action-color-hover);
+            background-color: var(--app-bg);
+            color: var(--app-content-main-color);
+
+            border-radius: 5px;
+
+            padding-left: 10px;
+            padding-right: 10px;
+            /* font-size: 25px; */
+
+
+            &:focus {
+                outline: none;
+                border: 1px solid var(--action-color);
+            }
+        }
+
+        .dropList {
+            border: 1px solid var(--action-color-hover);
+            background-color: var(--app-bg);
+            color: var(--app-content-main-color);
+            border-radius: 5px;
+            padding: 5px;
+            padding-right: 10px;
+            padding-left: 10px;
+
+            &:focus {
+                outline: none;
+                border: 1px solid var(--action-color);
+            }
+        }
+
+        .prop {
+
+            display: flex;
+            padding: 3px;
+            align-items: center;
+            flex-direction: row;
+            justify-content: flex-start;
+
+            .checkbox {
+                margin: 5px 5px 5px 5px;
+            }
+
+            .text {
+                margin-right: 5px;
+            }
+
+            .slider {
+                margin-right: 5px;
+            }
+
+            .value {
+                margin-right: 5px;
+                margin-left: 5px;
+            }
+
+
+            .color {
+                margin-left: 5px;
+                width: 30px;
+                height: 30px;
+                border: none;
+                background-color: #4f0c0c00;
+            }
+        }
+
+
+        .textItem {
+
+            border: 1px solid var(--action-color-hover);
+            background-color: var(--app-bg);
+            color: var(--app-content-main-color);
+            font-size: 15px;
+            border-radius: 50px;
+            margin: 2px;
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: center;
+
+
+            .textSelect {
+                margin: 5px 10px 5px 10px;
+                color: var(--app-content-main-color);
+                text-decoration: none;
+            }
+
+            .textSelect:hover {
+                color: var(--action-color-hover);
+            }
+
+            .trash-icon {
+                margin: 5px 10px 5px 10px;
+                color: var(--app-content-main-color);
+                text-decoration: none;
+                display: flex;
+            }
+
+            .trash-icon:hover {
+                color: var(--action-color-hover);
+            }
+        }
+    }
+
+    .list-veiw::-webkit-scrollbar {
+        width: 5px;
+    }
+
+    .list-veiw::-webkit-scrollbar-track {
+        margin: 10px;
+    }
+
+    .list-veiw::-webkit-scrollbar-thumb {
+        border: 2px solid var(--action-color-hover);
+        background-color: var(--action-color);
+        border-radius: 50px;
+    }
+}
+
+.properties.active {
+    max-width: 1000px;
+    max-height: 1000px;
+
+    background-color: var(--app-content-secondary-color);
+    box-shadow: var(--filter-shadow);
+}
