@@ -25,6 +25,6 @@ jobs:
         script: |
           cd /
           cd var/www/Edo-Tensei/
+          ls
           git pull origin main
           git status
-          npm install --only=prod
