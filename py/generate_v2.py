@@ -1,4 +1,6 @@
 from moviepy.editor import VideoFileClip, AudioFileClip, concatenate_videoclips,ImageSequenceClip
+
+from flaskServer import app
 from py.animator import load_interpolated_keys
 from PIL import Image
 import numpy as np
@@ -27,6 +29,7 @@ def final_image(orginal_image, points, referans,rec):
 
 
 def gene(rec):
+    print("start")
     total_time_start = time.time()
     edit_start_time = time.time()
     keys = load_interpolated_keys()
@@ -57,13 +60,16 @@ def gene(rec):
     audio = AudioFileClip("res/a1.flac")
     new_clip = new_clip.set_audio(audio)
     final_video = concatenate_videoclips([clip1, new_clip])
-    final_video.write_videofile('res/nameplate_girl.mp4')
-
+    # final_video.write_videofile('res/nameplate_girl.mp4')
+    final_video.write_videofile(app.config['VIDEO_DIR'] + '/nameplate_girl.mp4')
     clip1.close()
     new_clip.close()
     final_video.close()
 
     print('generate video : ', "%s seconds" % (time.time() - generate_video_start))
     print('total time : ', "%s seconds" % (time.time() - total_time_start))
+
+
+    return 'DONE'
 
 

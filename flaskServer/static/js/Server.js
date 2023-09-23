@@ -39,22 +39,30 @@ applyButton.addEventListener("click", () => {
         data: { "image": sendImage },
     })
         .then(function (response) {
-            // console.log(response.data);
-            const eventSource = new EventSource('/pragmata_girl_state');
-            eventSource.onmessage = function (event) {
-                const message = event.data;
-                updateState(message)
+            console.log(response.data);
 
-                if (message == "100") {
-                    processNumber.classList.remove('active');
-                    downLoad.classList.add('active');
-                    eventSource.close();
-                }
-            };
-            eventSource.onerror = function (error) {
-                console.error('EventSource failed:', error);
-                eventSource.close();
-            };
+            if (response.data == "DONE") {
+                processNumber.classList.remove('active');
+                downLoad.classList.add('active');
+            }
+           
+
+
+            // const eventSource = new EventSource('/pragmata_girl_state');
+            // eventSource.onmessage = function (event) {
+            //     const message = event.data;
+            //     updateState(message)
+
+            //     if (message == "100") {
+            //         processNumber.classList.remove('active');
+            //         downLoad.classList.add('active');
+            //         eventSource.close();
+            //     }
+            // };
+            // eventSource.onerror = function (error) {
+            //     console.error('EventSource failed:', error);
+            //     eventSource.close();
+            // };
         })
         .catch(function (error) {
             console.log(error.message);
