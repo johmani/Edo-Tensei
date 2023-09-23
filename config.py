@@ -10,14 +10,14 @@ class Config:
 class ProductionConfig(Config):
     DEBUG = False
     HOST = '154.41.228.96'
-    PORT = 5000
+    PORT = 80
     VIDEO_DIR = r'/mohamd/Edo-Tensei/flaskServer/client/video'
 
 
 class GunicornConfig(Config):
     DEBUG = False
     HOST = '0.0.0.0'
-    PORT = 5000
+    PORT = 80
     VIDEO_DIR = r'/mohamd/Edo-Tensei/flaskServer/client/video'
 
 
