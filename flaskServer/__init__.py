@@ -5,10 +5,10 @@ from flask import Flask
 # production
 # testing
 # default
-
+# gunicorn
 
 app = Flask(__name__)
-app.config.from_object(get_config('production'))
+app.config.from_object(get_config('gunicorn'))
 
 
 

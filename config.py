@@ -14,6 +14,12 @@ class ProductionConfig(Config):
     VIDEO_DIR = r'/mohamd/Edo-Tensei/flaskServer/client/video'
 
 
+class GunicornConfig(Config):
+    DEBUG = False
+    HOST = '0.0.0.0'
+    PORT = 5000
+    VIDEO_DIR = r'/mohamd/Edo-Tensei/flaskServer/client/video'
+
 
 
 class DevelopmentConfig(Config):
@@ -35,6 +41,7 @@ config_by_name = {
     'production': ProductionConfig,
     'testing': TestingConfig,
     'default': DevelopmentConfig,
+    'gunicorn': GunicornConfig
 }
 
 def get_config(env):

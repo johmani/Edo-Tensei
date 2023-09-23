@@ -27,6 +27,6 @@ jobs:
           cd mohamd/Edo-Tensei/
           git pull origin main
           git status
-          source env/bin/activate
-          python run.py
+          
+          
           
