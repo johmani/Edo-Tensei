@@ -28,7 +28,7 @@ def final_image(orginal_image, points, referans,rec):
     return image_np
 
 
-def gene(rec):
+def gene(rec,file_name):
     print("start")
     total_time_start = time.time()
     edit_start_time = time.time()
@@ -61,7 +61,7 @@ def gene(rec):
     new_clip = new_clip.set_audio(audio)
     final_video = concatenate_videoclips([clip1, new_clip])
     # final_video.write_videofile('res/nameplate_girl.mp4')
-    final_video.write_videofile(app.config['VIDEO_DIR'] + '/nameplate_girl.mp4')
+    final_video.write_videofile(app.config['VIDEO_DIR'] + '/' + file_name)
     clip1.close()
     new_clip.close()
     final_video.close()

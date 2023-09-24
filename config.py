@@ -1,5 +1,6 @@
 class Config:
-    SECRET_KEY = "mkjshsikvnikvdpdfj"
+    SECRET_KEY = "uf_a0hxfgrbfyjhyffdacc"
+
     SESSION_COOKIE_SECURE = True
     DEBUG = False
     TESTING = False
@@ -25,8 +26,8 @@ class GunicornConfig(Config):
 class DevelopmentConfig(Config):
     DEBUG = True
 
-    HOST = '10.2.0.2'
-    PORT = 5000
+    HOST = '18.0.1.18'
+    PORT = 80
 
     VIDEO_DIR = r'C:\Users\mohamd\Desktop\Edo-Tensei\flaskServer\client\video'
 

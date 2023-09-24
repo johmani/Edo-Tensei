@@ -9,7 +9,7 @@ cancelButton.addEventListener('click', function () {
     downLoad.classList.remove('active');
     progress.classList.remove('active');
 });
-
+// downLoad.classList.add('active');
 function updateState(i) {
     var max = 578;
     var min = 0;
@@ -26,17 +26,46 @@ function updateState(i) {
 
 
 
+downLoad.addEventListener("click", () => {
+
+    axios({
+        method: "GET",
+        url: url+"/download_pragmata_girl",
+        data: {"file_name":"ss"}
+    })
+        .then(function (response) {
+
+            window.location.href = "/download_pragmata_girl";
+            // axios({
+            //     method: "GET",
+            //     url: url+"/delete_cookie",
+            //     data: {"file_name":"ss"}
+            // })
+            //     .then(function (response) {
+            //         console.log(response.data);
+            //     })
+            //     .catch(function (error) {
+            //         console.log(error.message);
+            //     });
+  
+        })
+        .catch(function (error) {
+            console.log(error.message);
+        });
+});
+
 applyButton.addEventListener("click", () => {
 
     progress.classList.add('active');
     processNumber.classList.add('active');
 
     sendImage = canvas.toDataURL("image/png", 1.0);
+    const file_name = "momo.mp4"
 
     axios({
         method: "POST",
-        url: "http://154.41.228.96:5000/pragmata_girl",
-        data: { "image": sendImage },
+        url: url+"/pragmata_girl",
+        data: { "image": sendImage ,"file_name":file_name},
     })
         .then(function (response) {
             console.log(response.data);
@@ -46,8 +75,6 @@ applyButton.addEventListener("click", () => {
                 downLoad.classList.add('active');
             }
            
-
-
             // const eventSource = new EventSource('/pragmata_girl_state');
             // eventSource.onmessage = function (event) {
             //     const message = event.data;

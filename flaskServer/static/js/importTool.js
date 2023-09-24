@@ -12,13 +12,7 @@ class ImportTool extends CanvasObject{
     onDraw(mousePos) {
         if (this.isRemoved) return;
 
-        if (this.isSelected) {
-            // var html = document.getElementById("textSelect" + this.id);
-            // html.innerHTML = this.text;
-        }
-
         this.ctx.drawImage(this.image, this.position.x, this.position.y, this.scale.x, this.scale.y);
-
         this.drawBox(mousePos);
     }
 
@@ -38,21 +32,21 @@ class ImportTool extends CanvasObject{
             const { x3, y3 } = this.getBox();
             const radius = 10;
 
-            ctx.beginPath();
-            ctx.arc(x3, y3, radius, 0, 2 * Math.PI);
-            ctx.fillStyle = "#FF0000";
-            ctx.fill();
-            ctx.closePath();
+            this.ctx.beginPath();
+            this.ctx.arc(x3, y3, radius, 0, 2 * Math.PI);
+            this.ctx.fillStyle = "#FF0000";
+            this.ctx.fill();
+            this.ctx.closePath();
 
             const dis = mousePos.subtract(new Vector2(x3, y3)).magnitude();
 
             if (dis <= radius) {
 
-                ctx.beginPath();
-                ctx.arc(x3, y3, radius, 0, 2 * Math.PI);
-                ctx.fillStyle = "#4f0c0c5d";
-                ctx.fill();
-                ctx.closePath();
+                this.ctx.beginPath();
+                this.ctx.arc(x3, y3, radius, 0, 2 * Math.PI);
+                this.ctx.fillStyle = "#4f0c0c5d";
+                this.ctx.fill();
+                this.ctx.closePath();
             }
         }
 

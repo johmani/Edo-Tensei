@@ -8,7 +8,11 @@ from flask import Flask
 # gunicorn
 
 app = Flask(__name__)
-app.config.from_object(get_config('gunicorn'))
+app.config.from_object(get_config('production'))
+app.jinja_env.globals.update(HOST=app.config['HOST'])
+app.jinja_env.globals.update(PORT=app.config['PORT'])
+
+
 
 
 

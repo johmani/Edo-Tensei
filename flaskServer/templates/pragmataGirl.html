@@ -28,6 +28,12 @@
         gtag('config', 'G-3KPBQER1K9');
     </script>
 
+    <script>
+        const host = "{{HOST}}";
+        const port = "{{PORT}}";
+        const url = "http://" + host +":" + port
+    </script>
+
     <title>Edo Tensei</title>
 </head>
 
@@ -64,7 +70,6 @@
                         <i class="tool bx bx-rocket icon"></i>
                     </button>
 
-
                     <!-- <button class="mode-switch" title="Switch Theme">
                         <svg class="moon" fill="none" stroke="currentColor" stroke-linecap="round"
                             stroke-linejoin="round" stroke-width="2" width="24" height="24" viewBox="0 0 24 24">
@@ -80,6 +85,9 @@
 
                     <input type="file" id="fileInput" accept="image/*" style="display: none;">
                     <canvas class="veiw-port" id="veiw-port"></canvas>
+
+
+                   
 
                 </div>
 
@@ -172,10 +180,10 @@
 
                         <div class="processNumber" id="processNumber"> 0% </div>
 
-                        <a href="/download_pragmata_girl" download="nameplate_girl.mp4" class="downLoad"
-                            id="downLoad" download="hi">
+                        <a  href="#" class="downLoad" id="downLoad">
                             <i class="bx bx-download icon"></i>
                         </a>
+                        
 
                     </div>
                 </div>

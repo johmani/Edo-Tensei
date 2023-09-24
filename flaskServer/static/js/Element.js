@@ -7,9 +7,6 @@ const moveButton = document.getElementById('moveButton');
 
 const applyButton = document.getElementById('applyButton');
 
-
-
-
 var colorPicker = document.getElementById("colorPicker");
 
 const pencilProperties = document.getElementById('pencilProperties');

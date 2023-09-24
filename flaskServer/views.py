@@ -1,20 +1,22 @@
 import json
 import cv2
 import numpy as np
-from flask import render_template, request, Response,redirect,send_from_directory,abort
+from flask import render_template, request, Response, redirect, send_from_directory, abort, session,make_response
 from PIL.Image import open
 import base64
 import io
-
+import os
 from moviepy.audio.io.AudioFileClip import AudioFileClip
 from moviepy.video.compositing.concatenate import concatenate_videoclips
 from moviepy.video.io.ImageSequenceClip import ImageSequenceClip
 from moviepy.video.io.VideoFileClip import VideoFileClip
-
-
+import datetime
+import re
+import  multiprocessing as mp
 from py.animator import load_interpolated_keys
 from py.generate_v2 import gene
 import time
+
 
 
 from flaskServer import app
@@ -42,18 +44,38 @@ def pragmata_girl_page():
 def about():
     return render_template('about.html')
 
+@app.route('/CCC')
+def CCC():
+    ccc = make_response("Cookies", 200)
+    ccc.set_cookie("V1_", "name1")
+    return ccc
+
 @app.route('/pragmata_girl', methods=["POST"])
 def pragmata_girl():
-    global image
+    # global image
     request_data = json.loads(request.data)
     image_data = request_data.get('image')
+    # file_name = request_data.get('file_name')
+
     mime_type, base64_data = image_data.split(',', 1)
     img_bytes = base64.b64decode(base64_data)
     img = open(io.BytesIO(img_bytes))
     image = np.array(img)
     image = cv2.cvtColor(image, cv2.COLOR_RGBA2BGRA)
-    res = gene(image)
-    return res
+
+    formatted_time = datetime.datetime.now().strftime("%Y-%m-%d %H-%M-%S-%f")
+    full_name = request.remote_addr + "," + formatted_time
+
+    session["DDD"] = "ddddd"
+
+    # res = gene(image,full_name+'.mp4')
+    p = mp.Process(target=gene,args=(image,full_name+'.mp4'))
+    p.start()
+    p.join()
+
+    cook = make_response("DONE", 200)
+    cook.set_cookie("pragmata_girl_download", str(full_name))
+    return cook
 
 # def generate_event():
 #
@@ -107,9 +129,25 @@ def pragmata_girl():
 # def pragmata_girl_state():
 #     return Response(generate_event(),content_type='text/event-stream')
 
-@app.route('/download_pragmata_girl')
+
+
+@app.route('/download_pragmata_girl', methods=["GET"])
 def download_pragmata_girl():
+
     try:
-        return send_from_directory(directory=app.config['VIDEO_DIR'],path='nameplate_girl.mp4',as_attachment=False)
+        print("session:", session.get("DDD"))
+        name = request.cookies.get("pragmata_girl_download")
+        file_name = name + ".mp4"
+        print(file_name)
+        return send_from_directory(directory=app.config['VIDEO_DIR'], download_name="pragmata girl.mp4", path=file_name,as_attachment=False)
     except FileNotFoundError:
         abort(404)
+
+@app.route('/delete_cookie', methods=["GET"])
+def delete_cookie():
+    cook = make_response("DONE", 200)
+    cook.set_cookie("pragmata_girl_download", "N")
+    return cook
+
+
+
