@@ -66,8 +66,6 @@ def pragmata_girl():
     formatted_time = datetime.datetime.now().strftime("%Y-%m-%d %H-%M-%S-%f")
     full_name = request.remote_addr + "," + formatted_time
 
-    session["DDD"] = "ddddd"
-
     # res = gene(image,full_name+'.mp4')
     p = mp.Process(target=gene,args=(image,full_name+'.mp4'))
     p.start()
