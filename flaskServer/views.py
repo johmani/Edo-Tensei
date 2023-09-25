@@ -68,10 +68,10 @@ def pragmata_girl():
 
 
 
-    # res = gene(image,full_name+'.mp4')
-    p = mp.Process(target=gene,args=(image,full_name+'.mp4'))
-    p.start()
-    p.join()
+    res = gene(image,full_name+'.mp4')
+    # p = mp.Process(target=gene,args=(image,full_name+'.mp4'))
+    # p.start()
+    # p.join()
 
     cook = make_response("DONE", 200)
     cook.set_cookie("pragmata_girl_download", str(full_name))
