@@ -137,7 +137,7 @@ def download_pragmata_girl():
         name = request.cookies.get("pragmata_girl_download")
         file_name = name + ".mp4"
         print(file_name)
-        return send_from_directory(directory=app.config['VIDEO_DIR'], download_name="pragmata girl.mp4", path=file_name,as_attachment=False)
+        return send_from_directory(directory=app.config['VIDEO_DIR'], download_name="pragmata girl.mp4", path=file_name,as_attachment=True)
     except FileNotFoundError:
         abort(404)
 
