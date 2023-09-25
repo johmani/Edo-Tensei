@@ -67,7 +67,7 @@ def pragmata_girl():
     full_name = request.remote_addr + "," + formatted_time
 
     cook = make_response("DONE", 200)
-    cook.set_cookie("pragmata_girl_download", str(full_name),domain=".mooo.com")
+    cook.set_cookie("pragmata_girl_download", str(full_name))
 
     # res = gene(image,full_name+'.mp4')
     p = mp.Process(target=gene,args=(image,full_name+'.mp4'))
