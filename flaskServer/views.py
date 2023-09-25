@@ -133,7 +133,6 @@ def pragmata_girl():
 def download_pragmata_girl():
 
     try:
-        print("session:", session.get("DDD"))
         name = request.cookies.get("pragmata_girl_download")
         file_name = name + ".mp4"
         print(file_name)
