@@ -10,7 +10,7 @@ class Config:
 
 class ProductionConfig(Config):
     DEBUG = False
-    HOST = 'johmani.mooo.com'
+    HOST = '154.41.228.96'
     PORT = 80
     VIDEO_DIR = r'/mohamd/Edo-Tensei/flaskServer/client/video'
 
