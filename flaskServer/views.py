@@ -66,13 +66,15 @@ def pragmata_girl():
     formatted_time = datetime.datetime.now().strftime("%Y-%m-%d %H-%M-%S-%f")
     full_name = request.remote_addr + "," + formatted_time
 
-    cook = make_response("DONE", 200)
-    cook.set_cookie("pragmata_girl_download", str(full_name))
+
 
     # res = gene(image,full_name+'.mp4')
     p = mp.Process(target=gene,args=(image,full_name+'.mp4'))
     p.start()
     p.join()
+
+    cook = make_response("DONE", 200)
+    cook.set_cookie("pragmata_girl_download", str(full_name))
 
 
     return cook
