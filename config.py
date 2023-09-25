@@ -13,9 +13,6 @@ class ProductionConfig(Config):
     HOST = '154.41.228.96'
     PORT = 80
     VIDEO_DIR = r'/mohamd/Edo-Tensei/flaskServer/client/video'
-    SESSION_COOKIE_DOMAIN = "johmani.mooo.com"
-    SESSION_COOKIE_PATH = "/"
-    SESSION_COOKIE_SECURE = "false"
 
 
 class GunicornConfig(Config):
@@ -29,7 +26,7 @@ class GunicornConfig(Config):
 class DevelopmentConfig(Config):
     DEBUG = True
 
-    HOST = '18.0.1.30'
+    HOST = '62.210.100.215'
     PORT = 80
 
     VIDEO_DIR = r'C:\Users\mohamd\Desktop\Edo-Tensei\flaskServer\client\video'
