@@ -56,7 +56,7 @@ def pragmata_girl():
     image = np.array(img)
     image = cv2.cvtColor(image, cv2.COLOR_RGBA2BGRA)
 
-    formatted_time = datetime.datetime.now().strftime("%Y-%m-%d %H-%M-%S-%f")
+    formatted_time = datetime.datetime.now().strftime("%Y-%m-%d-%H-%M-%S-%f")
     full_name = request.remote_addr + "," + formatted_time
 
 
