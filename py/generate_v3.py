@@ -1,3 +1,6 @@
+import os
+
+from moviepy.editor import VideoFileClip, AudioFileClip
 from flaskServer import app
 from py.animator import load_interpolated_keys
 from PIL import Image
@@ -29,8 +32,7 @@ def final_image(orginal_image, points, referans,rec):
 def gene(rec,file_name):
     print("start")
 
-    # total_time_start = time.time()
-
+    total_time_start = time.time()
     edit_start_time = time.time()
     keys = load_interpolated_keys()
 
@@ -42,7 +44,7 @@ def gene(rec,file_name):
 
     referans[150:930, 230:1690] = rec[0:780, 0:1460]
 
-    video_writer = cv2.VideoWriter(app.config['VIDEO_DIR'] + '/' + file_name, cv2.VideoWriter_fourcc(*'XVID'), 60, (1920, 1080))
+    video_writer = cv2.VideoWriter("temp/temp_" + file_name.replace("mp4", "avi"), cv2.VideoWriter_fourcc(*'XVID'), 60, (1920, 1080))
     video_writer.set(cv2.CAP_PROP_BITRATE, 10000000)  # Set a higher bitrate
     end_frame = None
     while video_capture.isOpened():
@@ -73,22 +75,23 @@ def gene(rec,file_name):
     # cmd = "ffmpeg -i res/f.flac -i res/output.avi -c:v libx264 -crf 18 -preset slow -c:a aac -strict experimental -ac 2 -channel_layout stereo -pix_fmt yuv420p res/final.mp4 -r 60"
     # subprocess.call(cmd, shell=True)
 
-    # merge_time = time.time()
-    #
-    # input_video = "res/output.avi"
-    # input_audio = "res/f.flac"
-    # output_video = "res/final.mp4"
-    #
-    # video_clip = VideoFileClip(input_video)
-    # audio_clip = AudioFileClip(input_audio)
-    # video_clip = video_clip.set_audio(audio_clip)
-    # video_clip.write_videofile(output_video, codec='libx264')
+    merge_time = time.time()
 
 
+    video_clip = VideoFileClip("temp/temp_" + file_name.replace("mp4", "avi"))
+    audio_clip = AudioFileClip( "res/f.flac")
+    video_clip = video_clip.set_audio(audio_clip)
+    video_clip.write_videofile(app.config['VIDEO_DIR'] + '/' + file_name, codec='libx264')
 
-    # print('merge_time : ', "%s seconds" % (time.time() - merge_time))
+    audio_clip.close()
+    video_clip.close()
 
-    # print('total_time_start : ', "%s seconds" % (time.time() - total_time_start))
+    if os.path.exists("temp/temp_" + file_name):
+        os.remove("temp/temp_" + file_name)
+
+    print('merge_time : ', "%s seconds" % (time.time() - merge_time))
+
+    print('total_time_start : ', "%s seconds" % (time.time() - total_time_start))
 
     return 'DONE'
 
