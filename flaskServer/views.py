@@ -14,7 +14,7 @@ import datetime
 import re
 import  multiprocessing as mp
 from py.animator import load_interpolated_keys
-from py.generate_v2 import gene
+from py.generate_v3 import gene
 import time
 
 
@@ -68,7 +68,7 @@ def pragmata_girl():
 
 
 
-    # res = gene(image,full_name+'.mp4')
+    res = gene(image,full_name+'.mp4')
     # p = mp.Process(target=gene,args=(image,full_name+'.mp4'))
     # p.start()
     # p.join()
