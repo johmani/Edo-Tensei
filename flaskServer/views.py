@@ -68,7 +68,7 @@ def pragmata_girl():
 
 
 
-    res = gene(image,full_name+'.mp4')
+    # res = gene(image,full_name+'.mp4')
     # p = mp.Process(target=gene,args=(image,full_name+'.mp4'))
     # p.start()
     # p.join()

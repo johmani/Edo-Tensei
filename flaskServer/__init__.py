@@ -16,6 +16,4 @@ app.jinja_env.globals.update(HOST=app.config['HOST'])
 app.jinja_env.globals.update(PORT=app.config['PORT'])
 
 
-print(app.config)
-
 from flaskServer import views
