@@ -7,7 +7,7 @@ import base64
 import io
 import datetime
 import  multiprocessing as mp
-from py.generate_v3 import gene
+from py.generate_v4 import gene
 
 
 
@@ -54,7 +54,7 @@ def pragmata_girl():
     img_bytes = base64.b64decode(base64_data)
     img = open(io.BytesIO(img_bytes))
     image = np.array(img)
-    image = cv2.cvtColor(image, cv2.COLOR_RGBA2BGRA)
+    # image = cv2.cvtColor(image, cv2.COLOR_RGBA2BGRA)
 
     formatted_time = datetime.datetime.now().strftime("%Y-%m-%d-%H-%M-%S-%f")
     full_name = request.remote_addr + "," + formatted_time
