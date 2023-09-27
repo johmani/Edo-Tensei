@@ -41,8 +41,8 @@ def gene(rec,file_name):
 
     referans[150:930, 230:1690] = rec[0:780, 0:1460]
 
-    video_writer = cv2.VideoWriter("temp/temp_" + file_name.replace("mp4", "avi"), cv2.VideoWriter_fourcc(*'XVID'), 60, (1920, 1080))
-    video_writer.set(cv2.CAP_PROP_BITRATE, 10000000)  # Set a higher bitrate
+    video_writer = cv2.VideoWriter("temp/temp_" + file_name, cv2.VideoWriter_fourcc(*'mp4v'), 60, (1920, 1080))
+    # video_writer.set(cv2.CAP_PROP_BITRATE, 10000000)  # Set a higher bitrate
     end_frame = None
     while video_capture.isOpened():
 
@@ -70,17 +70,26 @@ def gene(rec,file_name):
 
     merge_time = time.time()
 
-    video = "temp/temp_" + file_name.replace("mp4", "avi")
+    video = "temp/temp_" + file_name
     audio = "res/f.flac"
-    res = app.config['VIDEO_DIR'] + '/' + file_name
+    res =  app.config['VIDEO_DIR'] + '/' + file_name
 
-    cmd = "ffmpeg -i " + video + " -i " + audio + " -c:v copy -map 0:v:0 -map 1:a:0 " + res
+    # cmd = "ffmpeg -i " + video + " -i " + audio + " -c:v copy -map 0:v:0 -map 1:a:0 " + res
+
+    cmd = "ffmpeg -i " + video + " -i " + audio + " " + res
     subprocess.call(cmd, shell=True)
 
+    # out = app.config['VIDEO_DIR'] + '/' + file_name
+    # cmd = "ffmpeg -i " + res + " " + out
+    # subprocess.call(cmd, shell=True)
+
+
     if os.path.exists("temp/temp_" + file_name):
-        os.remove("temp/temp_" + file_name.replace("mp4", "avi"))
+        os.remove("temp/temp_" + file_name)
+
 
     print('merge_time : ', "%s seconds" % (time.time() - merge_time))
+
 
     print('total_time_start : ', "%s seconds" % (time.time() - total_time_start))
 

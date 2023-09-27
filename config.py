@@ -24,8 +24,8 @@ class GunicornConfig(Config):
 
 class DevelopmentConfig(Config):
     DEBUG = True
-    SERVER_NAME = "18.0.1.103"
-    HOST = '18.0.1.103'
+    SERVER_NAME = "18.0.2.69"
+    HOST = '18.0.2.69'
     PORT = 80
 
     VIDEO_DIR = r'C:\Users\mohamd\Desktop\Edo-Tensei\flaskServer\client\video'
