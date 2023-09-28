@@ -1,20 +1,14 @@
 import json
 import cv2
 import numpy as np
-from flask import render_template, request, Response, redirect, send_from_directory, abort, session,make_response
+from flask import render_template, request, redirect, send_from_directory, abort, make_response
 from PIL.Image import open
 import base64
 import io
 import datetime
 import  multiprocessing as mp
-from py.generate_v3 import gene
-
-
-
-
+from py.generate_v5 import gene
 from flaskServer import app
-
-
 
 
 @app.route('/sign-up',methods=["GET","POST"])
@@ -48,7 +42,6 @@ def pragmata_girl():
     # global image
     request_data = json.loads(request.data)
     image_data = request_data.get('image')
-    # file_name = request_data.get('file_name')
 
     mime_type, base64_data = image_data.split(',', 1)
     img_bytes = base64.b64decode(base64_data)
@@ -59,16 +52,12 @@ def pragmata_girl():
     formatted_time = datetime.datetime.now().strftime("%Y-%m-%d-%H-%M-%S-%f")
     full_name = request.remote_addr + "," + formatted_time
 
-
-
-    # res = gene(image,full_name+'.mp4')
     p = mp.Process(target=gene,args=(image,full_name+'.mp4'))
     p.start()
     p.join()
 
     cook = make_response("DONE", 200)
     cook.set_cookie("pragmata_girl_download", str(full_name))
-
 
     return cook
 
