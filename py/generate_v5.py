@@ -1,14 +1,14 @@
-import os
-import subprocess
-from flaskServer import app
 from py.animator import load_interpolated_keys
+import  multiprocessing as mp
+from flaskServer import app
 from PIL import Image
 import numpy as np
+import subprocess
 import time
 import cv2
+import os
+
 import warnings
-# import matplotlib.pyplot as plt
-import  multiprocessing as mp
 
 def final_image(frame, points, referans, rec):
     referans[150:930, 230:1690] = rec[0:780, 0:1460]
@@ -24,20 +24,20 @@ def final_image(frame, points, referans, rec):
 
     return image_np
 
-def apply(path,name,start_index,rec):
+def process(path,name,start_index,rec):
+    print("start new process")
+
+    total_time_start = time.time()
     referans = cv2.imread('res/referans11.png', cv2.IMREAD_UNCHANGED)
     keys = load_interpolated_keys()
 
     video_writer = cv2.VideoWriter(name, cv2.VideoWriter_fourcc(*'mp4v'), 60, (1920, 1080))
-    video_writer.set(cv2.CAP_PROP_BITRATE, 100)
+    video_writer.set(cv2.CAP_PROP_BITRATE, 256)
     video_capture = cv2.VideoCapture(path)
     index = start_index
 
-    print(start_index, ",", path)
     while video_capture.isOpened():
-
         ret, frame = video_capture.read()
-
         if not ret:
             break
         points = keys[index]['points']
@@ -48,20 +48,13 @@ def apply(path,name,start_index,rec):
     video_capture.release()
     video_writer.release()
 
-
-def gene(rec,file_name):
-    print("start")
-
-    total_time_start = time.time()
-
-    p1 = mp.Process(target=apply, args=('res/p2/0000-0372.mp4',"temp/_1_" + file_name, 0, rec))
-    p2 = mp.Process(target=apply, args=('res/p2/0373-0744.mp4',"temp/_2_" + file_name, 373, rec))
+    print(f'process {start_index} : ', "%s seconds" % (time.time() - total_time_start))
 
 
-    p1.start()
-    p2.start()
+def final_scene(file_name,rec):
 
     video_writer = cv2.VideoWriter("temp/end_" + file_name, cv2.VideoWriter_fourcc(*'mp4v'), 60, (1920, 1080))
+    video_writer.set(cv2.CAP_PROP_BITRATE, 256)
     end_frame = cv2.imread('res/0744.jpg', cv2.IMREAD_UNCHANGED)
     referans = cv2.imread('res/referans11.png', cv2.IMREAD_UNCHANGED)
     keys = load_interpolated_keys()
@@ -73,12 +66,10 @@ def gene(rec,file_name):
         video_writer.write(f)
     video_writer.release()
 
-    p1.join()
-    p2.join()
+def combine(file_name):
 
-
-    files = ["c.mp4", "_1_" + file_name,"_2_" + file_name,"end_" + file_name]
-    txt_file = "temp/"+ file_name +"_t.txt"
+    files = ["c.mp4", "_1_" + file_name, "_2_" + file_name, "end_" + file_name]
+    txt_file = "temp/" + file_name + "_t.txt"
     with open(txt_file, "w") as file:
         for f in files:
             file.write("file '" + f + "'\n")
@@ -87,11 +78,17 @@ def gene(rec,file_name):
     audio = "res/f.flac"
     res = app.config['VIDEO_DIR'] + '/' + file_name
 
-    cmd = "ffmpeg -f concat -safe 0 -i " + txt_file + " -c copy " + video
+    cmd = f"ffmpeg -f concat -safe 0 -i {txt_file} -c copy {video}"
     subprocess.call(cmd, shell=True)
 
-    cmd = "ffmpeg -i " + video + " -i " + audio + " -c:v copy -map 0:v:0 -map 1:a:0 " + res
+    f = "temp/f_" + file_name
+    cmd = f'ffmpeg -i {video} -i {audio} -c:v copy -map 0:v:0 -map 1:a:0 {f}'
     subprocess.call(cmd, shell=True)
+
+    hard_time_start = time.time()
+    cmd = f'ffmpeg -i {f} -vf "scale={1440}:{720}" -c:a copy ' + res
+    subprocess.call(cmd, shell=True)
+    print('hard_time : ', "%s seconds" % (time.time() - hard_time_start))
 
     if os.path.exists(txt_file):
         os.remove(txt_file)
@@ -103,8 +100,32 @@ def gene(rec,file_name):
         os.remove("temp/_2_" + file_name)
     if os.path.exists("temp/end_" + file_name):
         os.remove("temp/end_" + file_name)
+    if os.path.exists(f):
+        os.remove(f)
+
+def gene(rec,file_name):
+
+    print("start")
+
+    total_time_start = time.time()
+
+    p1 = mp.Process(target=process, args=('res/p2/0000-0372.mp4', "temp/_1_" + file_name, 0, rec))
+    p2 = mp.Process(target=process, args=('res/p2/0373-0744.mp4', "temp/_2_" + file_name, 373, rec))
+
+    p1.start()
+    p2.start()
+
+    final_scene(file_name, rec)
+
+    p1.join()
+    p2.join()
+
+    combine(file_name)
 
     print('total_time_start : ', "%s seconds" % (time.time() - total_time_start))
+
+
+
 
 
 
