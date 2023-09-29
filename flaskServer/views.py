@@ -1,14 +1,15 @@
 import json
 import cv2
 import numpy as np
-from flask import render_template, request, redirect, send_from_directory, abort, make_response
+from flask import render_template, request, redirect, send_from_directory, abort, make_response,Response
 from PIL.Image import open
 import base64
 import io
 import datetime
 import  multiprocessing as mp
-from py.generate_v5 import gene
+from py.generate_v5 import gene,process,final_scene,combine
 from flaskServer import app
+import time
 
 
 @app.route('/sign-up',methods=["GET","POST"])
@@ -31,15 +32,11 @@ def pragmata_girl_page():
 def about():
     return render_template('about.html')
 
-@app.route('/CCC')
-def CCC():
-    ccc = make_response("Cookies", 200)
-    ccc.set_cookie("V1_", "name1")
-    return ccc
+
 
 @app.route('/pragmata_girl', methods=["POST"])
 def pragmata_girl():
-    # global image
+
     request_data = json.loads(request.data)
     image_data = request_data.get('image')
 
@@ -50,68 +47,58 @@ def pragmata_girl():
     image = cv2.cvtColor(image, cv2.COLOR_RGBA2BGRA)
 
     formatted_time = datetime.datetime.now().strftime("%Y-%m-%d-%H-%M-%S-%f")
-    full_name = request.remote_addr + "," + formatted_time
+    file_name = f'{request.remote_addr},{formatted_time}'
 
-    p = mp.Process(target=gene,args=(image,full_name+'.mp4'))
-    p.start()
-    p.join()
+    cv2.imwrite(f'temp/temp_rec_{request.remote_addr},{formatted_time}.png', image)
+
+    # p = mp.Process(target=gene,args=(image,full_name))
+    # p.start()
+    # p.join()
 
     cook = make_response("DONE", 200)
-    cook.set_cookie("pragmata_girl_download", str(full_name))
+    cook.set_cookie("pragmata_girl_download", str(file_name))
 
     return cook
 
-# def generate_event():
-#
-#     yield f"data: {0}\n\n"
-#     total_time_start = time.time()
-#     edit_start_time = time.time()
-#     keys = load_interpolated_keys()
-#     referans = cv2.imread('res/referans11.png', cv2.IMREAD_UNCHANGED)
-#     video_capture = cv2.VideoCapture('res/cuted0000-0744.mp4')
-#
-#     new_clip = []
-#     image_name = 0
-#     while video_capture.isOpened():
-#         ret, frame = video_capture.read()
-#         if not ret:
-#             break
-#         points = keys[image_name]['points']
-#         frame = final_image(frame, points, referans, image)
-#         frame = cv2.cvtColor(frame, cv2.COLOR_BGRA2RGB)
-#         new_clip.append(frame)
-#         image_name = image_name + 1
-#         r = int((image_name / 745 / 2) * 100)
-#         yield f"data: {r}\n\n"
-#     video_capture.release()
-#     print('edit : ', "%s seconds" % (time.time() - edit_start_time))
-#
-#     generate_video_start = time.time()
-#
-#     new_clip = ImageSequenceClip(new_clip, fps=60)
-#     new_clip = new_clip.subclip(0, 20.9)
-#     new_clip = new_clip.fadeout(7)
-#     audio = AudioFileClip("res/a1.flac")
-#     new_clip = new_clip.set_audio(audio)
-#
-#     clip1 = VideoFileClip("res/clip1.mp4")
-#     final_video = concatenate_videoclips([clip1, new_clip])
-#
-#
-#     final_video.write_videofile(app.config['VIDEO_DIR']+'/nameplate_girl.mp4')
-#
-#     clip1.close()
-#     new_clip.close()
-#     final_video.close()
-#
-#     print('generate video : ', "%s seconds" % (time.time() - generate_video_start))
-#     print('total time : ', "%s seconds" % (time.time() - total_time_start))
-#     yield f"data: {100}\n\n"
 
 
-# @app.route('/pragmata_girl_state')
-# def pragmata_girl_state():
-#     return Response(generate_event(),content_type='text/event-stream')
+
+
+@app.route('/pragmata_girl_state')
+def pragmata_girl_state():
+    file_name = request.cookies.get("pragmata_girl_download")
+    rec = cv2.imread(f'temp/temp_rec_{file_name}.png', cv2.IMREAD_UNCHANGED)
+    file_name = file_name + '.mp4'
+    def generate_event(file_name,rec):
+        print("start")
+        print(file_name,rec.shape)
+        yield f"data: {0}\n\n"
+
+        total_time_start = time.time()
+
+        p1 = mp.Process(target=process, args=('res/p2/0000-0372.mp4', "temp/_1_" + file_name, 0, rec))
+        p2 = mp.Process(target=process, args=('res/p2/0373-0744.mp4', "temp/_2_" + file_name, 373, rec))
+
+        p1.start()
+        yield f"data: {5}\n\n"
+        p2.start()
+        yield f"data: {10}\n\n"
+
+        final_scene(file_name, rec)
+
+        yield f"data: {30}\n\n"
+
+        p1.join()
+        yield f"data: {60}\n\n"
+        p2.join()
+        yield f"data: {95}\n\n"
+
+        combine(file_name)
+        yield f"data: {100}\n\n"
+
+        print('total_time_start : ', "%s seconds" % (time.time() - total_time_start))
+
+    return Response(generate_event(file_name,rec),content_type='text/event-stream')
 
 
 
@@ -119,10 +106,9 @@ def pragmata_girl():
 def download_pragmata_girl():
 
     try:
-        name = request.cookies.get("pragmata_girl_download")
-        file_name = name + ".mp4"
-        print(file_name)
-        return send_from_directory(directory=app.config['VIDEO_DIR'], download_name="pragmata girl.mp4", path=file_name,as_attachment=True)
+        name = request.cookies.get("pragmata_girl_download") + '.mp4'
+        print(name)
+        return send_from_directory(directory=app.config['VIDEO_DIR'], download_name="pragmata girl.mp4", path=name,as_attachment=True)
     except FileNotFoundError:
         abort(404)
 

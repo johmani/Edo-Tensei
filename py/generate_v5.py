@@ -67,6 +67,7 @@ def final_scene(file_name,rec):
     video_writer.release()
 
 def combine(file_name):
+    hard_time_start = time.time()
 
     files = ["c.mp4", "_1_" + file_name, "_2_" + file_name, "end_" + file_name]
     txt_file = "temp/" + file_name + "_t.txt"
@@ -74,26 +75,17 @@ def combine(file_name):
         for f in files:
             file.write("file '" + f + "'\n")
 
-    video = "temp/temp_" + file_name
     audio = "res/f.flac"
     res = app.config['VIDEO_DIR'] + '/' + file_name
 
-    cmd = f"ffmpeg -f concat -safe 0 -i {txt_file} -c copy {video}"
+    cmd = f"ffmpeg -f concat -safe 0 -i {txt_file} -i {audio} -c:v copy -c:a aac {res}"
     subprocess.call(cmd, shell=True)
 
-    f = "temp/f_" + file_name
-    cmd = f'ffmpeg -i {video} -i {audio} -c:v copy -map 0:v:0 -map 1:a:0 {f}'
-    subprocess.call(cmd, shell=True)
-
-    hard_time_start = time.time()
-    cmd = f'ffmpeg -i {f} -vf "scale={1440}:{720}" -c:a copy ' + res
-    subprocess.call(cmd, shell=True)
-    print('hard_time : ', "%s seconds" % (time.time() - hard_time_start))
+    # cmd = f'ffmpeg -i {f} -vf "scale={1440}:{720}" -c:a copy ' + res
+    # subprocess.call(cmd, shell=True)
 
     if os.path.exists(txt_file):
         os.remove(txt_file)
-    if os.path.exists(video):
-        os.remove(video)
     if os.path.exists("temp/_1_" + file_name):
         os.remove("temp/_1_" + file_name)
     if os.path.exists("temp/_2_" + file_name):
@@ -102,10 +94,15 @@ def combine(file_name):
         os.remove("temp/end_" + file_name)
     if os.path.exists(f):
         os.remove(f)
+    if os.path.exists("temp/temp_rec_" + file_name.replace('mp4','png')):
+        os.remove("temp/temp_rec_" + file_name.replace('mp4','png'))
+
+    print('hard_time : ', "%s seconds" % (time.time() - hard_time_start))
 
 def gene(rec,file_name):
 
     print("start")
+    yield f"data: {0}\n\n"
 
     total_time_start = time.time()
 
@@ -113,14 +110,21 @@ def gene(rec,file_name):
     p2 = mp.Process(target=process, args=('res/p2/0373-0744.mp4', "temp/_2_" + file_name, 373, rec))
 
     p1.start()
+    yield f"data: {5}\n\n"
     p2.start()
+    yield f"data: {10}\n\n"
 
     final_scene(file_name, rec)
 
+    yield f"data: {30}\n\n"
+
     p1.join()
+    yield f"data: {60}\n\n"
     p2.join()
+    yield f"data: {95}\n\n"
 
     combine(file_name)
+    yield f"data: {100}\n\n"
 
     print('total_time_start : ', "%s seconds" % (time.time() - total_time_start))
 

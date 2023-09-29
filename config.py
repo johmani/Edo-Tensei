@@ -9,9 +9,9 @@ class Config:
 
 class ProductionConfig(Config):
     DEBUG = False
-    SERVER_NAME = "johmani.mooo.com"
+    SERVER_NAME = "johmani.mooo.com:8080"
     HOST = 'johmani.mooo.com'
-    PORT = 80
+    PORT = 8080
     VIDEO_DIR = r'/mohamd/Edo-Tensei/flaskServer/client/video'
 
 
