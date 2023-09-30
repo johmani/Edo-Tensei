@@ -1,23 +1,15 @@
 import json
 import cv2
 import numpy as np
-from flask import render_template, request, redirect, send_from_directory, abort, make_response,Response
+from flask import render_template, request, redirect, send_from_directory, abort, make_response
 from PIL.Image import open
 import base64
 import io
 import datetime
 import  multiprocessing as mp
-from py.generate_v5 import gene
+from pragmataGirl.py.pragmataGirl import gene
 from flaskServer import app
 
-
-
-@app.route('/sign-up',methods=["GET","POST"])
-def sign_up():
-    if request.method == "POST":
-        print(request.form)
-        redirect(request.url)
-    return render_template('test.html')
 
 
 @app.route('/')
@@ -60,10 +52,6 @@ def pragmata_girl():
 
     return cook
 
-
-
-
-
 # @app.route('/pragmata_girl_state')
 # def pragmata_girl_state():
 #     file_name = request.cookies.get("pragmata_girl_download")
@@ -76,8 +64,8 @@ def pragmata_girl():
 #
 #         total_time_start = time.time()
 #
-#         p1 = mp.Process(target=process, args=('res/p2/0000-0372.mp4', "temp/_1_" + file_name, 0, rec))
-#         p2 = mp.Process(target=process, args=('res/p2/0373-0744.mp4', "temp/_2_" + file_name, 373, rec))
+#         p1 = mp.Process(target=process, args=('assets/p2/0000-0372.mp4', "temp/_1_" + file_name, 0, rec))
+#         p2 = mp.Process(target=process, args=('assets/p2/0373-0744.mp4', "temp/_2_" + file_name, 373, rec))
 #
 #         p1.start()
 #         yield f"data: {5}\n\n"
@@ -99,8 +87,6 @@ def pragmata_girl():
 #         print('total_time_start : ', "%s seconds" % (time.time() - total_time_start))
 #
 #     return Response(generate_event(file_name,rec),content_type='text/event-stream')
-
-
 
 @app.route('/download_pragmata_girl', methods=["GET"])
 def download_pragmata_girl():
