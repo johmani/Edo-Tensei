@@ -49,8 +49,9 @@ def pragmata_girl():
     formatted_time = datetime.datetime.now().strftime("%Y-%m-%d-%H-%M-%S-%f")
     file_name = f'{request.access_route[-1]},{formatted_time}'
 
-    cv2.imwrite(f'temp/temp_rec_{request.remote_addr},{formatted_time}.png', image)
+    # cv2.imwrite(f'temp/temp_rec_{request.remote_addr},{formatted_time}.png', image)
 
+    print(file_name)
     p = mp.Process(target=gene,args=(image,file_name + '.mp4'))
     p.start()
     p.join()
