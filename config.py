@@ -9,7 +9,7 @@ class Config:
 
 class ProductionConfig(Config):
     DEBUG = False
-    SERVER_NAME = "127.0.0.1:5000"
+    # SERVER_NAME = "johmani.mooo.com"
     HOST = '127.0.0.1'
     PORT = 5000
     VIDEO_DIR = r'/mohamd/Edo-Tensei/flaskServer/client/video'
