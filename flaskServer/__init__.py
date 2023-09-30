@@ -13,5 +13,5 @@ app.config.from_object(config.get_config('production'))
 app.jinja_env.globals.update(ENV=app.config['ENV'])
 app.jinja_env.globals.update(HOST=app.config['HOST'])
 app.jinja_env.globals.update(PORT=app.config['PORT'])
-
+print("mohamd johmani")
 from flaskServer import views
