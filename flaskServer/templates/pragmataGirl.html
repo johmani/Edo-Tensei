@@ -29,9 +29,18 @@
     </script>
 
     <script>
-        const host = "{{HOST}}";
-        const port = "{{PORT}}";
-        const url = "http://" + "johmani.mooo.com";// +":" + port
+        const env = "{{ENV}}";
+        let url = undefined;
+        if(env == "development")
+        {
+            const host = "{{HOST}}";
+            const port = "{{PORT}}";
+            url = "http://" + host + ":"+ port;
+        }
+        else{
+            url = "https://" + "johmani.mooo.com";
+        }
+        
     </script>
 
     <title>pragmata girl</title>

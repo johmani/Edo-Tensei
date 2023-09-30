@@ -8,6 +8,7 @@ class Config:
 
 
 class ProductionConfig(Config):
+    ENV = 'production'
     DEBUG = False
     # SERVER_NAME = "johmani.mooo.com"
     HOST = '127.0.0.1'
@@ -15,32 +16,21 @@ class ProductionConfig(Config):
     VIDEO_DIR = r'/mohamd/Edo-Tensei/flaskServer/client/video'
 
 
-class GunicornConfig(Config):
-    DEBUG = False
-    HOST = '0.0.0.0'
-    PORT = 80
-    VIDEO_DIR = r'/mohamd/Edo-Tensei/flaskServer/client/video'
-
-
 class DevelopmentConfig(Config):
+    ENV = 'development'
     DEBUG = True
-    SERVER_NAME = "18.0.1.128"
-    HOST = '18.0.1.128'
+    # SERVER_NAME = "18.0.1.75"
+    HOST = '18.0.1.75'
     PORT = 80
 
     VIDEO_DIR = r'C:\Users\mohamd\Desktop\Edo-Tensei\flaskServer\client\video'
 
 
-class TestingConfig(Config):
-    TESTING = True
-
 
 config_by_name = {
     'development': DevelopmentConfig,
     'production': ProductionConfig,
-    'testing': TestingConfig,
     'default': DevelopmentConfig,
-    'gunicorn': GunicornConfig
 }
 
 def get_config(env):

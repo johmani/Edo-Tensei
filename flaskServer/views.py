@@ -51,7 +51,6 @@ def pragmata_girl():
 
     # cv2.imwrite(f'temp/temp_rec_{request.remote_addr},{formatted_time}.png', image)
 
-    print(file_name)
     p = mp.Process(target=gene,args=(image,file_name + '.mp4'))
     p.start()
     p.join()
