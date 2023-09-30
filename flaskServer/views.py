@@ -7,9 +7,9 @@ import base64
 import io
 import datetime
 import  multiprocessing as mp
-from py.generate_v5 import gene,process,final_scene,combine
+from py.generate_v5 import gene
 from flaskServer import app
-import time
+
 
 
 @app.route('/sign-up',methods=["GET","POST"])
@@ -51,9 +51,9 @@ def pragmata_girl():
 
     cv2.imwrite(f'temp/temp_rec_{request.remote_addr},{formatted_time}.png', image)
 
-    # p = mp.Process(target=gene,args=(image,full_name))
-    # p.start()
-    # p.join()
+    p = mp.Process(target=gene,args=(image,file_name + '.mp4'))
+    p.start()
+    p.join()
 
     cook = make_response("DONE", 200)
     cook.set_cookie("pragmata_girl_download", str(file_name))
@@ -64,41 +64,41 @@ def pragmata_girl():
 
 
 
-@app.route('/pragmata_girl_state')
-def pragmata_girl_state():
-    file_name = request.cookies.get("pragmata_girl_download")
-    rec = cv2.imread(f'temp/temp_rec_{file_name}.png', cv2.IMREAD_UNCHANGED)
-    file_name = file_name + '.mp4'
-    def generate_event(file_name,rec):
-        print("start")
-        print(file_name,rec.shape)
-        yield f"data: {0}\n\n"
-
-        total_time_start = time.time()
-
-        p1 = mp.Process(target=process, args=('res/p2/0000-0372.mp4', "temp/_1_" + file_name, 0, rec))
-        p2 = mp.Process(target=process, args=('res/p2/0373-0744.mp4', "temp/_2_" + file_name, 373, rec))
-
-        p1.start()
-        yield f"data: {5}\n\n"
-        p2.start()
-        yield f"data: {10}\n\n"
-
-        final_scene(file_name, rec)
-
-        yield f"data: {30}\n\n"
-
-        p1.join()
-        yield f"data: {60}\n\n"
-        p2.join()
-        yield f"data: {95}\n\n"
-
-        combine(file_name)
-        yield f"data: {100}\n\n"
-
-        print('total_time_start : ', "%s seconds" % (time.time() - total_time_start))
-
-    return Response(generate_event(file_name,rec),content_type='text/event-stream')
+# @app.route('/pragmata_girl_state')
+# def pragmata_girl_state():
+#     file_name = request.cookies.get("pragmata_girl_download")
+#     rec = cv2.imread(f'temp/temp_rec_{file_name}.png', cv2.IMREAD_UNCHANGED)
+#     file_name = file_name + '.mp4'
+#     def generate_event(file_name,rec):
+#         print("start")
+#         print(file_name,rec.shape)
+#         yield f"data: {0}\n\n"
+#
+#         total_time_start = time.time()
+#
+#         p1 = mp.Process(target=process, args=('res/p2/0000-0372.mp4', "temp/_1_" + file_name, 0, rec))
+#         p2 = mp.Process(target=process, args=('res/p2/0373-0744.mp4', "temp/_2_" + file_name, 373, rec))
+#
+#         p1.start()
+#         yield f"data: {5}\n\n"
+#         p2.start()
+#         yield f"data: {10}\n\n"
+#
+#         final_scene(file_name, rec)
+#
+#         yield f"data: {30}\n\n"
+#
+#         p1.join()
+#         yield f"data: {60}\n\n"
+#         p2.join()
+#         yield f"data: {95}\n\n"
+#
+#         combine(file_name)
+#         yield f"data: {100}\n\n"
+#
+#         print('total_time_start : ', "%s seconds" % (time.time() - total_time_start))
+#
+#     return Response(generate_event(file_name,rec),content_type='text/event-stream')
 
 
 
