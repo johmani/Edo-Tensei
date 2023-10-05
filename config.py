@@ -3,7 +3,7 @@ class Config:
     SESSION_COOKIE_SECURE = True
     DEBUG = False
     TESTING = False
-    VIDEO_DIR = r'C:\Users\mohamd\Desktop\Edo-Tensei\flaskServer\client\video\pragmataGirl'
+    VIDEO_DIR = r'/flaskServer/client/pragmataGirl'
 
 
 class ProductionConfig(Config):
@@ -12,7 +12,7 @@ class ProductionConfig(Config):
     HOST = 'johmani.mooo.com'
     PORT = 443
     URL = "https://" + HOST
-    VIDEO_DIR = r'/mohamd/Edo-Tensei/flaskServer/client/video/pragmataGirl'
+    VIDEO_DIR = r'/mohamd/Edo-Tensei/flaskServer/client/'
 
 
 class DevelopmentConfig(Config):
@@ -21,7 +21,7 @@ class DevelopmentConfig(Config):
     HOST = '18.0.1.19'
     PORT = 80
     URL = "http://" + HOST
-    VIDEO_DIR = r'C:\Users\mohamd\Desktop\Edo-Tensei\flaskServer\client\video\pragmataGirl'
+    VIDEO_DIR = r'C:/Users/mohamd/Desktop/Edo-Tensei/flaskServer/client/'
 
 
 config_by_name = {

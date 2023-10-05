@@ -1,3 +1,5 @@
+import json
+
 from pragmataGirl.animator import load_interpolated_keys
 import  multiprocessing as mp
 from PIL import Image
@@ -23,7 +25,7 @@ def final_image(frame, points,referans,rec):
     return image_np
 
 
-def process(input_path, result_path,referans,rec,keys,start_index,terminate_event):
+def process(input_path, result_path,referans,rec,keys,start_index,state_path):
     print("start new process")
 
     video_writer = cv2.VideoWriter(result_path, cv2.VideoWriter_fourcc(*'mp4v'), 60, (1920, 1080))
@@ -31,10 +33,16 @@ def process(input_path, result_path,referans,rec,keys,start_index,terminate_even
     video_capture = cv2.VideoCapture(input_path)
     index = start_index
 
-    while video_capture.isOpened() and not terminate_event.is_set():
+    while video_capture.isOpened():
         ret, frame = video_capture.read()
         if not ret:
             break
+
+        with open(state_path, 'r') as file:
+            task_state = json.load(file)['state']
+        if task_state:
+            break
+
         points = keys[index]['points']
         frame = final_image(frame, points,referans,rec)
         video_writer.write(frame)
@@ -60,12 +68,13 @@ class VideoGenerator:
         self.clip2_path = self.temp_path + "_1_" + self.file_name
         self.clip3_path = self.temp_path + "_2_" + self.file_name
         self.clip4_path = self.temp_path + "end_" + self.file_name
+        self.state = self.temp_path + self.file_name.replace('mp4','json')
         self.txt_path = self.temp_path + self.file_name.replace('mp4','txt')
         self.audio_path = self.assets_path + "audio.flac"
         self.final_video_path = self.dirctory + self.file_name
         self.type = 'mp4v'
         self.is_canseld = False
-        self.terminate_event = mp.Event()
+        # self.terminate_event = mp.Event()
 
 
     def final_scene(self):
@@ -79,7 +88,9 @@ class VideoGenerator:
             v = 1 - (i / 468)
             f = cv2.convertScaleAbs(self.end_frame, alpha=v, beta=0)
             video_writer.write(f)
-            if self.is_canseld:
+            with open(self.state, 'r') as file:
+                task_state = json.load(file)['state']
+            if task_state:
                 break
         video_writer.release()
 
@@ -92,6 +103,8 @@ class VideoGenerator:
             os.remove(self.clip3_path)
         if os.path.exists(self.clip4_path):
             os.remove(self.clip4_path)
+        if os.path.exists(self.state):
+            os.remove(self.state)
 
         # if os.path.exists("temp/temp_rec_" + file_name.replace('mp4','png')):
         #     os.remove("temp/temp_rec_" + file_name.replace('mp4','png'))
@@ -105,7 +118,10 @@ class VideoGenerator:
         if not file1_exists or not file2_exists or not file3_exists:
             return
 
-        if not self.is_canseld:
+        with open(self.state, 'r') as file:
+            task_state = json.load(file)['state']
+
+        if not task_state:
             files = ["clip1.mp4", "_1_" + self.file_name, "_2_" + self.file_name, "end_" + self.file_name]
             with open(self.txt_path, "w") as file:
                 for f in files:
@@ -116,6 +132,8 @@ class VideoGenerator:
 
             # cmd = f'ffmpeg -i {f} -vf "scale={1440}:{720}" -c:a copy ' + assets
             # subprocess.call(cmd, shell=True)
+        else:
+            self.is_canseld = True
 
         self.delete()
 
@@ -125,9 +143,13 @@ class VideoGenerator:
         print("start")
         total_time_start = time.time()
 
-        self.p1 = mp.Process(target=process,args=(self.video1, self.clip2_path,self.referans,self.rec,self.keys, 0,self.terminate_event))
+        data = {"state": False}
+        with open(self.state, "w") as file:
+            json.dump(data, file)
+
+        self.p1 = mp.Process(target=process,args=(self.video1, self.clip2_path,self.referans,self.rec,self.keys, 0,self.state))
         self.p1.start()
-        self.p2 = mp.Process(target=process,args=(self.video2, self.clip3_path,self.referans,self.rec,self.keys, 373,self.terminate_event))
+        self.p2 = mp.Process(target=process,args=(self.video2, self.clip3_path,self.referans,self.rec,self.keys, 373,self.state))
         self.p2.start()
         self.final_scene()
 
@@ -138,6 +160,3 @@ class VideoGenerator:
         self.combine()
         print('total_time_start : ', "%s seconds" % (time.time() - total_time_start))
 
-    def cansel(self):
-        self.is_canseld = True
-        self.terminate_event.set()
