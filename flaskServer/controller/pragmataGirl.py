@@ -38,6 +38,7 @@ def submit_pragmata_girl():
 
 @app.route('/pragmata_girl', methods=["POST"])
 def pragmata_girl():
+    print('pragmata_girl : ',active_processes)
     request_data = json.loads(request.data)
     process_key = str(request.access_route[-1]) + ',' + str(request_data.get('sessionNumber'))
     girl = active_processes[process_key]
