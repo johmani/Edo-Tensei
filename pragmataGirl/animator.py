@@ -14,7 +14,7 @@ def interpolation_point(point1, point2, frame_count):
     frame_count = abs(frame_count)
     interpolated_frames = []
     for frame in range(frame_count):
-        t = frame / (frame_count - 1)  # Calculate t for the current frame
+        t = frame / (frame_count - 1)
         interpolated_x, interpolated_y = linear_interpolation(point1[0], point1[1], point2[0], point2[1], t)
         interpolated_frames.append((round(interpolated_x), round(interpolated_y)))
     return np.array(interpolated_frames)

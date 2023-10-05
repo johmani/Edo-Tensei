@@ -86,7 +86,6 @@ class TextTool extends CanvasObject {
     this.ctx.fillStyle = this.isGradient ? gradient : this.color1;
 
     this.ctx.fillText(this.text, this.textPos.x, this.textPos.y);
-    this.drawBox(mousePos);
   }
 
   updateData() {

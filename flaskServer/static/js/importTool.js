@@ -9,14 +9,14 @@ class ImportTool extends CanvasObject{
         this.isActive = active;
     }
 
-    onDraw(mousePos) {
+    onDraw() {
         if (this.isRemoved) return;
-
         this.ctx.drawImage(this.image, this.position.x, this.position.y, this.scale.x, this.scale.y);
-        this.drawBox(mousePos);
     }
 
-    drawBox(mousePos) {
+    onDrawGizmos(mousePos) {
+        if (this.isRemoved) return;
+        if (!this.isDrawGizmos) return;
 
         this.ctx.strokeStyle = this.boxColor;
         this.ctx.lineWidth = this.boxLineWidth;

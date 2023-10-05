@@ -15,7 +15,7 @@ var scetchTool = new DrawingApp(canvas, colorPicker, pencil_size_slider);
 var select = new SelectionTool(canvas, createText);
 select.setState(false);
 
-var texts = [];
+var items = [];
 
 
 var fileInput = document.getElementById('fileInput');
@@ -37,9 +37,9 @@ fileInput.addEventListener('change', function (event) {
       img.src = e.target.result;
 
       img.onload = function () {
-        var importTool = new ImportTool(canvas, texts.length, img, new Vector2(0, 0));
+        var importTool = new ImportTool(canvas, items.length, img, new Vector2(0, 0));
         importTool.setState(true);
-        texts = texts.concat(importTool);
+        items = items.concat(importTool);
 
 
         const itemSelect = "textSelect" + importTool.id;
@@ -65,19 +65,19 @@ fileInput.addEventListener('change', function (event) {
 
 
 function selectText(id) {
-  texts.forEach((text) => {
+  items.forEach((text) => {
     text.isSelected = false;
   });
 
-  texts[id].isSelected = true;
-  texts[id].isAssigned = false;
+  items[id].isSelected = true;
+  items[id].isAssigned = false;
   inputText.focus();
 }
 
 function removeText(id) {
   document.getElementById("deletIcon" + id).parentNode.remove();
-  texts[id].isRemoved = true;
-  texts[id].isSelected = false;
+  items[id].isRemoved = true;
+  items[id].isSelected = false;
 }
 
 function createText() {
@@ -90,7 +90,7 @@ function createText() {
   if (textSize < 30) return
   var myText = new TextTool(
     canvas,
-    texts.length,
+    items.length,
     inputText,
     textColorPicker1,
     textColorPicker2,
@@ -112,7 +112,7 @@ function createText() {
   text_size_value.innerHTML = myText.size;
 
   myText.setState(true);
-  texts = texts.concat(myText);
+  items = items.concat(myText);
   // inputText.focus();
 
 
@@ -153,18 +153,39 @@ class Canvas {
     }
     this.onUpdate();
   }
+  getImage(t){
+    this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+    this.ctx.drawImage(sourceImage, 0, 0, this.canvas.width, this.canvas.height);
+
+    items.forEach((item) => {
+      item.isDrawGizmos = false;
+      item.onDraw(this.mousePos);
+    });
+
+    scetchTool.onDraw();
+    const image = canvas.toDataURL("image/png", 1.0);
+    items.forEach((item) => {
+      item.isDrawGizmos = true;
+    });
+
+    return image;
+  }
 
   onUpdate() {
     this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
     this.ctx.drawImage(sourceImage, 0, 0, this.canvas.width, this.canvas.height);
 
     {
-      texts.forEach((text) => {
-        text.onDraw(this.mousePos);
+      items.forEach((item) => {
+        item.onDraw();
       });
 
       scetchTool.onDraw();
-      select.onDraw();
+      select.onDrawGizmos();
+
+      items.forEach((item) => {
+        item.onDrawGizmos(this.mousePos);
+      });
     }
 
     this.animationRequestId = requestAnimationFrame(this.onUpdate.bind(this));
@@ -174,8 +195,9 @@ class Canvas {
 
     select.onMouseDown(e);
     scetchTool.onMouseDown(e);
-    texts.forEach((text) => {
-      text.onMouseDown(e);
+
+    items.forEach((item) => {
+      item.onMouseDown(e);
     });
 
   }
@@ -184,25 +206,23 @@ class Canvas {
     this.mousePos = canvasFunctions.position(e, this.canvas);
 
     select.onMousMove(e);
-    texts.forEach((text) => {
-      text.drag(e);
+    items.forEach((item) => {
+      item.drag(e);
     });
     scetchTool.onMouseMove(e);
   }
 
   onMouseUp(e) {
     select.onMousUp(e);
-    texts.forEach((text) => {
-      text.onMousUp(e);
+    items.forEach((item) => {
+      item.onMousUp(e);
     });
 
     scetchTool.onMouseUp(e);
 
-
-
     var t = false;
-    texts.forEach((text) => {
-      if (text.isSelected == true && text instanceof TextTool) {
+    items.forEach((item) => {
+      if (item.isSelected == true && item instanceof TextTool) {
         textProperties.classList.add('active');
         t = true;
       }
@@ -214,8 +234,8 @@ class Canvas {
 
   onMouseOut(e) {
     select.onMousOut(e);
-    texts.forEach((text) => {
-      text.onMousOut(e);
+    items.forEach((item) => {
+      item.onMousOut(e);
     });
     scetchTool.onMouseOut(e)
   }

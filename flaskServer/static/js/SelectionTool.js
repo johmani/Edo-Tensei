@@ -20,7 +20,7 @@ class SelectionTool {
         
         var pos = canvasFunctions.position(e,this.canvas);
        
-        for (const text of texts) {
+        for (const text of items) {
             if (text.isInBox({ x: pos.x, y: pos.y })) {
                if(!text.isRemoved){
                 // inputText.focus();
@@ -64,7 +64,7 @@ class SelectionTool {
         this.isDrawing = false
     }
 
-    onDraw(){
+    onDrawGizmos(){
         if (!this.isDrawing) return;
  
         this.ctx.strokeStyle = this.boxColor;

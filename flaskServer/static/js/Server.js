@@ -1,106 +1,93 @@
-const progress = document.getElementById('progress');
+const popup = document.getElementById('popup');
 const downLoad = document.getElementById('downLoad');
-const processNumber = document.getElementById('processNumber');
-const process = document.getElementById('process');
 const cancelButton = document.getElementById('cancelButton');
+const processing_container = document.getElementById('processing-container');
 
-cancelButton.addEventListener('click', function () {
-    processNumber.classList.add('active');
-    downLoad.classList.remove('active');
-    progress.classList.remove('active');
-});
-// downLoad.classList.add('active');
-function updateState(i) {
-    var max = 578;
-    var min = 0;
 
-    i = i > 100 ? 100 : i < 0 ? 0 : i;
+var sessionNumber = undefined;
 
-    var p = i / 100;
-    var r = (1 - p) * min + p * max;
-    var inv = max - r;
+function getTime() {
+    var currentDate = new Date();
 
-    processNumber.innerHTML = i + "%";
-    process.style.strokeDashoffset = inv;
+    var year = currentDate.getFullYear();
+    var month = currentDate.getMonth() + 1;
+    var day = currentDate.getDate();
+    var hours = currentDate.getHours();
+    var minutes = currentDate.getMinutes();
+    var seconds = currentDate.getSeconds();
+    var ms = currentDate.getMilliseconds();
+
+    time = `${year}-${month}-${day}-${hours}-${minutes}-${seconds}-${ms}`
+
+    return time
 }
 
 
-
-// downLoad.addEventListener("click", () => {
-
-//     axios({
-//         method: "GET",
-//         url: url+"/download_pragmata_girl",
-//         data: {"file_name":"ss"}
-//     })
-//         .then(function (response) {
-
-//             window.location.href = "/download_pragmata_girl";
-//             // axios({
-//             //     method: "GET",
-//             //     url: url+"/delete_cookie",
-//             //     data: {"file_name":"ss"}
-//             // })
-//             //     .then(function (response) {
-//             //         console.log(response.data);
-//             //     })
-//             //     .catch(function (error) {
-//             //         console.log(error.message);
-//             //     });
-  
-//         })
-//         .catch(function (error) {
-//             console.log(error.message);
-//         });
-// });
-
-applyButton.addEventListener("click", () => {
-
-    progress.classList.add('active');
-    processNumber.classList.add('active');
-
-    sendImage = canvas.toDataURL("image/png", 1.0);
-    const file_name = "momo.mp4"
-
+function generate() {
+    cancelButton.classList.add('active');
     axios({
         method: "POST",
-        url: url+"/pragmata_girl",
-        data: { "image": sendImage ,"file_name":file_name},
+        url: url + "/pragmata_girl",
+        data: { "sessionNumber": sessionNumber },
     })
         .then(function (response) {
-            console.log(response.data);
-
-            if (response.data == "DONE") {
-                processNumber.classList.remove('active');
-                downLoad.classList.add('active');
-            }
-           
-            // const eventSource = new EventSource('/pragmata_girl_state');
-            // eventSource.onmessage = function (event) {
-            //     const message = event.data;
-            //     updateState(message)
-
-            //     if (message == "100") {
-            //         processNumber.classList.remove('active');
-            //         downLoad.classList.add('active');
-            //         eventSource.close();
-            //     }
-            // };
-            // eventSource.onerror = function (error) {
-            //     console.error('EventSource failed:', error);
-            //     eventSource.close();
-            // };
+            console.log(response.data.message);
+            processing_container.classList.remove('active');
+            downLoad.classList.add('active');
         })
         .catch(function (error) {
             console.log(error.message);
         });
+}
+
+applyButton.addEventListener("click", () => {
+
+    sessionNumber = getTime()
+
+    popup.classList.add('active');
+    processing_container.classList.add('active');
+    downLoad.classList.remove('active');
+    cancelButton.classList.remove('active');
+
+    sendImage = c.getImage();
+
+    axios({
+        method: "POST",
+        url: url + "/submit_pragmata_girl",
+        data: { "image": sendImage, "sessionNumber": sessionNumber },
+    })
+    .then(function (response) {
+        console.log(response.data.message);
+        generate()
+    })
+    .catch(function (error) {
+        console.log(error);
+    });
 });
 
+downLoad.addEventListener("click", () => {
+    var a = document.createElement('a');
+    a.href = "/download_pragmata_girl?sessionNumber=" + sessionNumber;
+    a.setAttribute('download', '');
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+});
 
+cancelButton.addEventListener('click', function () {
 
+    popup.classList.remove('active');
 
+    axios({
+        method: "POST",
+        url: url + "/cancel_process",
+        data: { "sessionNumber": sessionNumber }
+    })
+        .then(function (response) {
+            console.log(response.data.message);
+        })
+        .catch(function (error) {
+            console.log(error);
+        });
 
-
-
-
-
+});

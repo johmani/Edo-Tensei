@@ -5,7 +5,7 @@ class CanvasObject {
 
         this.isActive = false;
         this.isDraging = false;
-        this.isDrawBox = false;
+        this.isDrawGizmos = true;
         this.cursorState = false;
         this.isSelected = true;
         this.isRemoved = false;
@@ -144,7 +144,6 @@ class CanvasObject {
                 document.body.style.cursor = 'auto';
             }
         }
-
     }
 
     reSize(mousePos) {
@@ -168,7 +167,9 @@ class CanvasObject {
         }
     }
 
-    drawBox(mousePos) {
+    onDrawGizmos(mousePos) {
+        if (this.isRemoved) return;
+        if (!this.isDrawGizmos) return;
 
         this.ctx.strokeStyle = this.boxColor;
         this.ctx.lineWidth = this.boxLineWidth;
@@ -233,6 +234,4 @@ class CanvasObject {
         if (this.isRemoved) return;
         this.isDraging = false
     }
-
-
 }

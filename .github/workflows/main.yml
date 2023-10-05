@@ -27,12 +27,8 @@ jobs:
           cd mohamd/Edo-Tensei/
           git pull origin main
           git status
-          cd /mohamd/Edo-Tensei
-          source env/bin/activate
-          pkill -P1 gunicorn
           pkill gunicorn
-          gunicorn -w 10 -t 600 -b 127.0.0.1:1024 wsgi:app
-          
+          nohup gunicorn -w 10 -t 600 -b 127.0.0.1:1024 wsgi:app &
           
           
           

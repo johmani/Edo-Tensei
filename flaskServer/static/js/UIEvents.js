@@ -39,11 +39,9 @@ importButton.addEventListener("click", () => {
   scetchTool.setState(false);
   select.setState(false);
 
-  texts.forEach((text) => {
-    text.setState(true);
+  items.forEach((item) => {
+    item.setState(true);
   });
-
-
 });
 
 
@@ -59,9 +57,9 @@ pencilButton.addEventListener("click", () => {
 
 
 
-  texts.forEach((text) => {
-    text.isSelected = false;
-    text.setState(false);
+  items.forEach((item) => {
+    item.isSelected = false;
+    item.setState(false);
   });
 });
 
@@ -77,8 +75,8 @@ textButton.addEventListener("click", () => {
   scetchTool.setState(false);
   select.setState(true);
 
-  texts.forEach((text) => {
-    text.setState(true);
+  items.forEach((item) => {
+    item.setState(true);
   });
 });
 
@@ -90,8 +88,8 @@ moveButton.addEventListener("click", () => {
   scetchTool.setState(false);
   select.setState(false);
 
-  texts.forEach((text) => {
-    text.setState(true);
+  items.forEach((item) => {
+    item.setState(true);
   });
 
 });

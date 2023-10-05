@@ -9,19 +9,19 @@ class Config:
 class ProductionConfig(Config):
     ENV = 'production'
     DEBUG = False
-    HOST = '127.0.0.1'
-    PORT = 1024
+    HOST = 'johmani.mooo.com'
+    PORT = 443
+    URL = "https://" + HOST
     VIDEO_DIR = r'/mohamd/Edo-Tensei/flaskServer/client/video/pragmataGirl'
 
 
 class DevelopmentConfig(Config):
     ENV = 'development'
     DEBUG = True
-    HOST = '127.0.0.1'
-    PORT = 1024
-
+    HOST = '18.0.1.19'
+    PORT = 80
+    URL = "http://" + HOST
     VIDEO_DIR = r'C:\Users\mohamd\Desktop\Edo-Tensei\flaskServer\client\video\pragmataGirl'
-
 
 
 config_by_name = {

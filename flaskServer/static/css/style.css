@@ -12,7 +12,7 @@
     color: var(--app-content-main-color);
     font-size: 25px;
     line-height: 32px;
-    margin: 0px 0px 0px 20px;
+    margin: 0px 10px 0px 10px;
     background-color: transparent;
     border: none;
     padding: 0;
@@ -88,6 +88,10 @@
     .main-content {
         flex-direction: column;
 
+        .draw-area-wrapper{
+            margin: 0px;
+        }
+
         .app-content-actions-wrapper {
             width: 100%;
 
@@ -96,11 +100,16 @@
             }
         }
     }
+    
 }
 
 @media screen and (max-width: 520px) {
     .main-content {
         flex-direction: column;
+
+        .draw-area-wrapper{
+            margin: 0px;
+        }
 
         .app-content-actions-wrapper {
             width: 100%;
@@ -120,17 +129,14 @@
     width: 100%;
     max-height: 100%;
     overflow: auto;
-    padding: 0;
-
-}
-
-.draw-area {
-    /* background-color: #da0303; */
+    
     display: flex;
     justify-content: center;
     align-items: center;
-    margin: 0;
+    margin: 10px;
 }
+
+
 
 .veiw-port {
     background-color: #03dac6;

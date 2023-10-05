@@ -12,12 +12,11 @@
     <link rel="stylesheet" href="/static/css/style.css" />
     <link rel="stylesheet" href="/static/css/popup.css" />
 
+
     <!----===== Boxicons  CSS ===== -->
     <link rel="stylesheet" href="https://unpkg.com/boxicons@2.1.1/css/boxicons.min.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css">
 
-
-    
     <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-3KPBQER1K9"></script>
     <script>
@@ -29,18 +28,7 @@
     </script>
 
     <script>
-        const env = "{{ENV}}";
-        let url = undefined;
-        if(env == "development")
-        {
-            const host = "{{HOST}}";
-            const port = "{{PORT}}";
-            url = "http://" + host + ":"+ port;
-        }
-        else{
-            url = "https://" + "johmani.mooo.com";
-        }
-        
+        const url = "{{URL}}";
     </script>
 
     <title>pragmata girl</title>
@@ -52,51 +40,56 @@
 
             <nav class="app-content-header">
 
-                <a href="/" class="tool-switch" id="back" title="Switch Theme"
+                <a href="/" class="tool-switch" id="back" title="back to home"
                     style="margin-left: 0; text-decoration: none;">
                     <i class="tool fa-regular fa-circle-left fa-fade"></i>
                 </a>
 
-                <div class="header-content-actions-wrapper">
+                <div style="display: flex;">
 
-                    <button class="tool-switch" id="importButton" title="Switch Theme">
-                        <i class="tool fa-regular fa-image"></i>
-                    </button>
+                    <div class="header-content-actions-wrapper">
 
-                    <button class="tool-switch" id="pencilButton" title="Switch Theme">
-                        <i class="tool  bx bx-paint icon"></i>
-                    </button>
+                        <button class="tool-switch" id="importButton" title="import image">
+                            <i class="tool fa-regular fa-image"></i>
+                        </button>
 
-                    <button class="tool-switch" id="textButton" title="Switch Theme">
-                        <i class="tool bx bx-text icon"></i>
-                    </button>
+                        <button class="tool-switch" id="pencilButton" title="draw stuff on screen">
+                            <i class="tool  bx bx-paint icon"></i>
+                        </button>
 
-                    <button class="tool-switch" id="moveButton" title="Switch Theme">
-                        <i class="tool bx bx-move icon"></i>
-                    </button>
+                        <button class="tool-switch" id="textButton" title="add text">
+                            <i class="tool bx bx-text icon"></i>
+                        </button>
 
-                    <button class="tool-switch" id="applyButton" title="Switch Theme">
-                        <i class="tool bx bx-rocket icon"></i>
-                    </button>
+                        <button class="tool-switch" id="moveButton" title="move item">
+                            <i class="tool bx bx-move icon"></i>
+                        </button>
 
-                    <!-- <button class="mode-switch" title="Switch Theme">
+
+                        <!-- <button class="mode-switch" title="Switch Theme">
                         <svg class="moon" fill="none" stroke="currentColor" stroke-linecap="round"
                             stroke-linejoin="round" stroke-width="2" width="24" height="24" viewBox="0 0 24 24">
                             <defs></defs>
                             <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
                         </svg>
                     </button> -->
+                    </div>
+
+                    <div class="header-content-actions-wrapper" style="margin-left: 10px;">
+                        <button class="tool-switch" id="applyButton" title="submitt and generate video"
+                            style="margin: 0px;">
+                            <i class="tool bx bx-rocket icon"></i>
+                        </button>
+                    </div>
+
                 </div>
             </nav>
 
             <div class="main-content">
-                <div class="draw-area-wrapper draw-area">
+                <div class="draw-area-wrapper">
 
                     <input type="file" id="fileInput" accept="image/*" style="display: none;">
                     <canvas class="veiw-port" id="veiw-port"></canvas>
-
-
-                   
 
                 </div>
 
@@ -104,7 +97,6 @@
 
                     <div class="properties" id="pencilProperties">
 
-                        <!-- <div class="title">main setting</div> -->
                         <div class="list-veiw" style="height: 100px;">
                             <div class="prop">
                                 <a class="text">color</a>
@@ -121,7 +113,6 @@
 
                     <div class="properties" id="textProperties">
 
-                        <!-- <div class="title">main setting</div> -->
                         <div class="list-veiw">
 
                             <textarea class="inputField" id="inputText" name="inputText" rows="3" cols="0"></textarea>
@@ -153,9 +144,6 @@
                                 <option value="Brush Script MT">Brush Script MT</option>
                             </select>
                         </div>
-
-
-
                     </div>
 
                     <div class="properties active" id="layer">
@@ -166,36 +154,22 @@
                     </div>
                 </div>
 
-   
+
             </div>
 
-            <div class="popup" id="progress">
-            
-                <a href="#" class="cancelButton"> <i id="cancelButton" class="bx bx-x icon"></i> </a>
-                <div class="outer">
-                    <div class="inner">
+            <div class="popup" id="popup">
 
-                        <svg class="svg" xmlns="http://www.w3.org/2000/svg" version="1.1" width="200px"
-                            height="200px">
-                            <defs>
-                                <linearGradient id="GradientColor">
-                                    <stop offset="0%" stop-color="#2869ff" />
-                                    <stop offset="100%" stop-color="#6291fd" />
-                                </linearGradient>
-                            </defs>
-                            <circle class="circle" id="process" cx="100px" cy="100px" r="92"
-                                stroke-linecap="round" />
-                        </svg>
+                <a href="#" class="cancelButton" id="cancelButton"> <i class="bx bx-x icon"></i> </a>
 
-                        <div class="processNumber" id="processNumber"> 0% </div>
-
-                        <a  href="/download_pragmata_girl" class="downLoad" id="downLoad">
-                            <i class="bx bx-download icon"></i>
-                        </a>
-                        
-
-                    </div>
+                <div class="processing-container" id="processing-container">
+                    <div class="processing"></div>
+                    <div class="processing-text">processing</div>
                 </div>
+
+                <a href="#" class="downLoad" id="downLoad">
+                    <i class="bx bx-download icon"></i>
+                </a>
+
             </div>
         </div>
     </div>
