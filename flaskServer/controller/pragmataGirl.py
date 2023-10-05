@@ -14,7 +14,6 @@ active_processes = {}
 
 @app.route('/submit_pragmata_girl', methods=["POST"])
 def submit_pragmata_girl():
-    print(active_processes)
     try:
         data = request.get_json()
         image_data = data.get('image')
@@ -39,28 +38,22 @@ def submit_pragmata_girl():
 
 @app.route('/pragmata_girl', methods=["POST"])
 def pragmata_girl():
+    request_data = json.loads(request.data)
+    process_key = str(request.access_route[-1]) + ',' + str(request_data.get('sessionNumber'))
+    girl = active_processes[process_key]
+    girl.generate()
 
-    try:
-        request_data = json.loads(request.data)
-        process_key = str(request.access_route[-1]) + ',' + str(request_data.get('sessionNumber'))
-        girl = active_processes[process_key]
-        girl.generate()
+    if active_processes[process_key] != None:
+        del active_processes[process_key]
 
-        if active_processes[process_key] != None:
-            del active_processes[process_key]
-
-        if girl.is_canseld:
-            message = f'Pragmata girl with key {process_key} closed successfully'
-            print(message)
-            return jsonify({'message': message}), 200
-
-        message = f'Pragmata girl with key {process_key} generated successfully'
+    if girl.is_canseld:
+        message = f'Pragmata girl with key {process_key} closed successfully'
         print(message)
         return jsonify({'message': message}), 200
 
-    except Exception as e:
-        print(f"ERROR: {str(e)}")
-        return jsonify({"error": str(e)}), 500
+    message = f'Pragmata girl with key {process_key} generated successfully'
+    print(message)
+    return jsonify({'message': message}), 200
 
 
 @app.route('/download_pragmata_girl', methods=["GET"])

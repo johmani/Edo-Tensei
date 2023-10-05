@@ -23,13 +23,10 @@ jobs:
         key: ${{ secrets.SSH_PRIVATE_KEY }}
         port: 22
         script: |
-          cd /
-          cd mohamd/Edo-Tensei/
+          cd /mohamd/Edo-Tensei/
           git pull origin main
           git status
-          pkill gunicorn
-          source env/bin/activate
-          nohup gunicorn -w 10 -t 600 -b 127.0.0.1:1024 wsgi:app &
+
           
           
           
