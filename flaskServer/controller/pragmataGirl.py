@@ -83,7 +83,11 @@ def cancel_process():
         data = {"state": True}
         with open(state_path, "w") as file:
             json.dump(data, file)
-        return jsonify({"message": f"Process {process_key} canceled successfully"})
+
+        message = f"Process {process_key} canceled successfully"
+        print(message)
+        return jsonify({"message": f"Process {process_key} canceled successfully"}),200
     else:
-        print(f"Process {process_key} closed successfully")
-        return jsonify({"message": f"Process {process_key} closed successfully"}), 200
+        message = f"Process {process_key} closed successfully"
+        print(message)
+        return jsonify({"message": message}), 200
