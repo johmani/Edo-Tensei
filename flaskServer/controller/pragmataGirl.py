@@ -16,49 +16,38 @@ active_processes = {}
 
 @app.route('/submit_pragmata_girl', methods=["POST"])
 def submit_pragmata_girl():
-    try:
-        data = request.get_json()
-        image_data = data.get('image')
-        session_number = data.get('sessionNumber')
+    data = request.get_json()
+    image_data = data.get('image')
+    session_number = data.get('sessionNumber')
 
-        mime_type, base64_data = image_data.split(',', 1)
-        img_bytes = base64.b64decode(base64_data)
-        image = cv2.cvtColor(np.array(PIL.Image.open(io.BytesIO(img_bytes))), cv2.COLOR_RGBA2BGRA)
+    mime_type, base64_data = image_data.split(',', 1)
+    img_bytes = base64.b64decode(base64_data)
+    image = cv2.cvtColor(np.array(PIL.Image.open(io.BytesIO(img_bytes))), cv2.COLOR_RGBA2BGRA)
 
-        process_key = f"{request.access_route[-1]},{session_number}"
-        cv2.imwrite(f"{app.root_path}/client/pragmataGirl/image/{process_key}.png", image)
+    process_key = f"{request.access_route[-1]},{session_number}"
+    cv2.imwrite(f"{app.root_path}/client/pragmataGirl/image/{process_key}.png", image)
 
-        print(f'Pragmata girl with key {process_key} submitted successfully')
-        return jsonify({'message': f'Pragmata girl with key {process_key} submitted successfully'}),200
-
-    except Exception as e:
-        print(f"ERROR: {str(e)}")
-        return jsonify({"error": str(e)}), 500
+    print(f'Pragmata girl with key {process_key} submitted successfully')
+    return jsonify({'message': f'Pragmata girl with key {process_key} submitted successfully'}), 200
 
 
 @app.route('/pragmata_girl', methods=["POST"])
 def pragmata_girl():
+    request_data = json.loads(request.data)
+    process_key = str(request.access_route[-1]) + ',' + str(request_data.get('sessionNumber'))
 
-    try:
-        request_data = json.loads(request.data)
-        process_key = str(request.access_route[-1]) + ',' + str(request_data.get('sessionNumber'))
+    image = cv2.imread(f"{app.root_path}/client/pragmataGirl/image/{process_key}.png", cv2.IMREAD_UNCHANGED)
+    girl = VideoGenerator(f"{app.root_path}/client/pragmataGirl/video/", f'{process_key}.mp4', image)
+    girl.generate()
 
-        image = cv2.imread(f"{app.root_path}/client/pragmataGirl/image/{process_key}.png", cv2.IMREAD_UNCHANGED)
-        girl = VideoGenerator(f"{app.root_path}/client/pragmataGirl/video/",f'{process_key}.mp4', image)
-        girl.generate()
-
-        if girl.is_canseld:
-            message = f'Pragmata girl with key {process_key} closed successfully'
-            print(message)
-            return jsonify({'message': message}), 200
-
-        message = f'Pragmata girl with key {process_key} generated successfully'
+    if girl.is_canseld:
+        message = f'Pragmata girl with key {process_key} closed successfully'
         print(message)
         return jsonify({'message': message}), 200
 
-    except Exception as e:
-        print(f"ERROR: {str(e)}")
-        return jsonify({"error": str(e)}), 500
+    message = f'Pragmata girl with key {process_key} generated successfully'
+    print(message)
+    return jsonify({'message': message}), 200
 
 
 @app.route('/download_pragmata_girl', methods=["GET"])
