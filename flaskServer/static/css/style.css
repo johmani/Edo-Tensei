@@ -1,5 +1,9 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
 
+:root {
+	--tool-radius: 15;
+}
+
 * {
     margin: 0;
     padding: 0;
@@ -85,6 +89,12 @@
 }
 
 @media screen and (max-width: 820px) {
+
+    :root {
+        --tool-radius: 25;
+    }
+    
+    
     .main-content {
         flex-direction: column;
 
@@ -104,6 +114,12 @@
 }
 
 @media screen and (max-width: 520px) {
+
+    :root {
+        --tool-radius: 25;
+    }
+    
+    
     .main-content {
         flex-direction: column;
 

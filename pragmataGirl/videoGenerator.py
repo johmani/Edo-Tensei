@@ -10,12 +10,15 @@ import cv2
 import os
 
 
-def final_image(frame, points,referans,rec):
+def final_image(frame, points,referans,rec,resolution):
     referans[150:930, 230:1690] = rec[0:780, 0:1460]
     source_points = np.float32([[0, 0], [1920, 0], [1920, 1080], [0, 1080]])
     destination_points = np.float32(points)
     perspective_matrix = cv2.getPerspectiveTransform(source_points, destination_points)
     warped_referans = cv2.warpPerspective(referans, perspective_matrix, (1920, 1080))
+
+    warped_referans = np.array(Image.fromarray(warped_referans).resize(resolution, Image.LANCZOS))
+    frame = np.array(Image.fromarray(frame).resize(resolution, Image.LANCZOS))
 
     frontImage = Image.fromarray(warped_referans)
     background = Image.fromarray(frame)
@@ -25,10 +28,10 @@ def final_image(frame, points,referans,rec):
     return image_np
 
 
-def process(input_path, result_path,referans,rec,keys,start_index,state_path):
+def process(input_path, result_path,referans,rec,keys,start_index,state_path,resolution):
     print("start new process")
 
-    video_writer = cv2.VideoWriter(result_path, cv2.VideoWriter_fourcc(*'mp4v'), 60, (1920, 1080))
+    video_writer = cv2.VideoWriter(result_path, cv2.VideoWriter_fourcc(*'mp4v'), 60, resolution)
     video_writer.set(cv2.CAP_PROP_BITRATE, 256)
     video_capture = cv2.VideoCapture(input_path)
     index = start_index
@@ -43,8 +46,16 @@ def process(input_path, result_path,referans,rec,keys,start_index,state_path):
         if task_state:
             break
 
-        points = keys[index]['points']
-        frame = final_image(frame, points,referans,rec)
+        if "_0_" not in result_path:
+           points = keys[index]['points']
+           frame = final_image(frame, points, referans, rec,resolution)
+        else:
+            # frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+            frame = Image.fromarray(frame)
+            frame = frame.resize(resolution, Image.LANCZOS)
+            frame = np.array(frame)
+
+
         video_writer.write(frame)
         index = index + 1
 
@@ -62,9 +73,10 @@ class VideoGenerator:
         self.referans = cv2.imread(self.assets_path + 'referans.png', cv2.IMREAD_UNCHANGED)
         self.end_frame = cv2.imread(self.assets_path + '0744.jpg', cv2.IMREAD_UNCHANGED)
         self.keys = load_interpolated_keys()
+        self.video0 = self.assets_path + 'clips/clip1.mp4'
         self.video1 = self.assets_path + 'clips/0000-0372.mp4'
         self.video2 = self.assets_path + 'clips/0373-0744.mp4'
-        self.clip1_path = "clip1.mp4"
+        self.clip0_path = self.temp_path + "_0_" + self.file_name
         self.clip2_path = self.temp_path + "_1_" + self.file_name
         self.clip3_path = self.temp_path + "_2_" + self.file_name
         self.clip4_path = self.temp_path + "end_" + self.file_name
@@ -73,17 +85,29 @@ class VideoGenerator:
         self.audio_path = self.assets_path + "audio.flac"
         self.final_video_path = self.dirctory + self.file_name
         self.type = 'mp4v'
+        self.resolution = self.get_resolution(360)
         self.is_canseld = False
-        # self.terminate_event = mp.Event()
 
+
+    def get_resolution(self,resolution):
+        resolutions = {
+            144: (256, 144),
+            240: (426, 240),
+            360: (640, 360),
+            480: (854, 480),
+            720: (1280, 720),
+            1080: (1920, 1080)
+        }
+
+        return resolutions.get(resolution, (1280, 720))
 
     def final_scene(self):
         print("start final scene")
-        video_writer = cv2.VideoWriter(self.clip4_path, cv2.VideoWriter_fourcc(*self.type), 60, (1920, 1080))
+        video_writer = cv2.VideoWriter(self.clip4_path, cv2.VideoWriter_fourcc(*self.type), 60, self.resolution)
         video_writer.set(cv2.CAP_PROP_BITRATE, 256)
 
         points = self.keys[744]['points']
-        self.end_frame = final_image(self.end_frame, points,self.referans,self.rec)
+        self.end_frame = final_image(self.end_frame, points,self.referans,self.rec,self.resolution)
         for i in range(469):
             v = 1 - (i / 468)
             f = cv2.convertScaleAbs(self.end_frame, alpha=v, beta=0)
@@ -103,6 +127,8 @@ class VideoGenerator:
             os.remove(self.clip3_path)
         if os.path.exists(self.clip4_path):
             os.remove(self.clip4_path)
+        if os.path.exists(self.clip0_path):
+            os.remove(self.clip0_path)
         if os.path.exists(self.state):
             os.remove(self.state)
 
@@ -122,7 +148,7 @@ class VideoGenerator:
             task_state = json.load(file)['state']
 
         if not task_state:
-            files = ["clip1.mp4", "_1_" + self.file_name, "_2_" + self.file_name, "end_" + self.file_name]
+            files = ["_0_" + self.file_name, "_1_" + self.file_name, "_2_" + self.file_name, "end_" + self.file_name]
             with open(self.txt_path, "w") as file:
                 for f in files:
                     file.write("file '" + f + "'\n")
@@ -147,15 +173,20 @@ class VideoGenerator:
         with open(self.state, "w") as file:
             json.dump(data, file)
 
-        self.p1 = mp.Process(target=process,args=(self.video1, self.clip2_path,self.referans,self.rec,self.keys, 0,self.state))
+        self.p3 = mp.Process(target=process, args=( self.video0, self.clip0_path, self.referans, self.rec, self.keys, 373, self.state, self.resolution))
+        self.p3.start()
+
+        self.p1 = mp.Process(target=process,args=(self.video1, self.clip2_path,self.referans,self.rec,self.keys, 0,self.state,self.resolution))
         self.p1.start()
-        self.p2 = mp.Process(target=process,args=(self.video2, self.clip3_path,self.referans,self.rec,self.keys, 373,self.state))
+        self.p2 = mp.Process(target=process,args=(self.video2, self.clip3_path,self.referans,self.rec,self.keys, 373,self.state,self.resolution))
         self.p2.start()
+
+
         self.final_scene()
 
         self.p1.join()
         self.p2.join()
-        # self.p3.join()
+        self.p3.join()
 
         self.combine()
         print('total_time_start : ', "%s seconds" % (time.time() - total_time_start))

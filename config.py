@@ -3,7 +3,7 @@ class Config:
     SESSION_COOKIE_SECURE = True
     DEBUG = False
     TESTING = False
-    VIDEO_DIR = r'/flaskServer/client/pragmataGirl'
+
 
 
 class ProductionConfig(Config):
@@ -12,16 +12,16 @@ class ProductionConfig(Config):
     HOST = 'johmani.mooo.com'
     PORT = 443
     URL = "https://" + HOST
-    VIDEO_DIR = r'/mohamd/Edo-Tensei/flaskServer/client/'
+
 
 
 class DevelopmentConfig(Config):
     ENV = 'development'
     DEBUG = True
-    HOST = '18.0.1.19'
-    PORT = 80
-    URL = "http://" + HOST
-    VIDEO_DIR = r'C:/Users/mohamd/Desktop/Edo-Tensei/flaskServer/client/'
+    HOST = '127.0.0.1'
+    PORT = 5000
+    URL = f'http://{HOST}:{PORT}'
+
 
 
 config_by_name = {

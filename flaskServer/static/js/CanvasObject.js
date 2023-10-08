@@ -22,6 +22,8 @@ class CanvasObject {
         this.boxColor = "black";
         this.boxLineWidth = 2;
 
+        this.toolRadius = getComputedStyle(document.documentElement).getPropertyValue('--tool-radius');
+
         this.tempScale = new Vector2(scale.x, scale.y);
         this.isOnResize = false;
     }
@@ -98,7 +100,7 @@ class CanvasObject {
     delete(mousePos) {
 
         const { x2, y2 } = this.getBox();
-        const radius = 15;
+        const radius = this.toolRadius;
 
         // delete button
         {

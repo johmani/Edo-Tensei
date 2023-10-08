@@ -26,7 +26,7 @@ def submit_pragmata_girl():
         image = cv2.cvtColor(np.array(PIL.Image.open(io.BytesIO(img_bytes))), cv2.COLOR_RGBA2BGRA)
 
         process_key = f"{request.access_route[-1]},{session_number}"
-        cv2.imwrite(f"{app.config['VIDEO_DIR']}/pragmataGirl/image/{process_key}.png", image)
+        cv2.imwrite(f"{app.root_path}/client/pragmataGirl/image/{process_key}.png", image)
 
         print(f'Pragmata girl with key {process_key} submitted successfully')
         return jsonify({'message': f'Pragmata girl with key {process_key} submitted successfully'}),200
@@ -43,8 +43,8 @@ def pragmata_girl():
         request_data = json.loads(request.data)
         process_key = str(request.access_route[-1]) + ',' + str(request_data.get('sessionNumber'))
 
-        image = cv2.imread(f"{app.config['VIDEO_DIR']}pragmataGirl/image/{process_key}.png", cv2.IMREAD_UNCHANGED)
-        girl = VideoGenerator(f"{app.config['VIDEO_DIR']}/pragmataGirl/video/",f'{process_key}.mp4', image)
+        image = cv2.imread(f"{app.root_path}/client/pragmataGirl/image/{process_key}.png", cv2.IMREAD_UNCHANGED)
+        girl = VideoGenerator(f"{app.root_path}/client/pragmataGirl/video/",f'{process_key}.mp4', image)
         girl.generate()
 
         if girl.is_canseld:
@@ -67,7 +67,7 @@ def download_pragmata_girl():
         session_number = request.args.get('sessionNumber')
         process_key = f"{request.access_route[-1]},{session_number}"
         name = f"{process_key}.mp4"
-        return send_from_directory(directory=f"{app.config['VIDEO_DIR']}/pragmataGirl/video", download_name="pragmata girl.mp4", path=name, as_attachment=True)
+        return send_from_directory(directory=f"{app.root_path}/client/pragmataGirl/video", download_name="pragmata girl.mp4", path=name, as_attachment=False)
     except FileNotFoundError:
         abort(404)
 
