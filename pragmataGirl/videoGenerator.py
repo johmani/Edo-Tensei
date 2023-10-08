@@ -17,8 +17,11 @@ def final_image(frame, points,referans,rec,resolution):
     perspective_matrix = cv2.getPerspectiveTransform(source_points, destination_points)
     warped_referans = cv2.warpPerspective(referans, perspective_matrix, (1920, 1080))
 
-    warped_referans = np.array(Image.fromarray(warped_referans).resize(resolution, Image.LANCZOS))
-    frame = np.array(Image.fromarray(frame).resize(resolution, Image.LANCZOS))
+    # warped_referans = cv2.resize(warped_referans, resolution)
+    # frame = cv2.resize(frame, resolution)
+
+    # warped_referans = np.array(Image.fromarray(warped_referans).resize(resolution, Image.LANCZOS))
+    # frame = np.array(Image.fromarray(frame).resize(resolution, Image.LANCZOS))
 
     frontImage = Image.fromarray(warped_referans)
     background = Image.fromarray(frame)
@@ -31,8 +34,8 @@ def final_image(frame, points,referans,rec,resolution):
 def process(input_path, result_path,referans,rec,keys,start_index,state_path,resolution):
     print("start new process")
 
-    video_writer = cv2.VideoWriter(result_path, cv2.VideoWriter_fourcc(*'mp4v'), 60, resolution)
-    video_writer.set(cv2.CAP_PROP_BITRATE, 256)
+    video_writer = cv2.VideoWriter(result_path, cv2.VideoWriter_fourcc(*'mp4v'), 60, (1920,1080))
+    video_writer.set(cv2.CAP_PROP_BITRATE, 256 * 1024)
     video_capture = cv2.VideoCapture(input_path)
     index = start_index
 
@@ -49,11 +52,11 @@ def process(input_path, result_path,referans,rec,keys,start_index,state_path,res
         if "_0_" not in result_path:
            points = keys[index]['points']
            frame = final_image(frame, points, referans, rec,resolution)
-        else:
+        # else:
             # frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
-            frame = Image.fromarray(frame)
-            frame = frame.resize(resolution, Image.LANCZOS)
-            frame = np.array(frame)
+            # frame = Image.fromarray(frame)
+            # frame = frame.resize(resolution, Image.LANCZOS)
+            # frame = np.array(frame)
 
 
         video_writer.write(frame)
@@ -85,7 +88,7 @@ class VideoGenerator:
         self.audio_path = self.assets_path + "audio.flac"
         self.final_video_path = self.dirctory + self.file_name
         self.type = 'mp4v'
-        self.resolution = self.get_resolution(360)
+        self.resolution = self.get_resolution(480)
         self.is_canseld = False
 
 
@@ -103,8 +106,8 @@ class VideoGenerator:
 
     def final_scene(self):
         print("start final scene")
-        video_writer = cv2.VideoWriter(self.clip4_path, cv2.VideoWriter_fourcc(*self.type), 60, self.resolution)
-        video_writer.set(cv2.CAP_PROP_BITRATE, 256)
+        video_writer = cv2.VideoWriter(self.clip4_path, cv2.VideoWriter_fourcc(*self.type), 60,(1920,1080))
+        video_writer.set(cv2.CAP_PROP_BITRATE, 256 * 1024)
 
         points = self.keys[744]['points']
         self.end_frame = final_image(self.end_frame, points,self.referans,self.rec,self.resolution)
@@ -153,7 +156,10 @@ class VideoGenerator:
                 for f in files:
                     file.write("file '" + f + "'\n")
 
-            cmd = f"ffmpeg -f concat -safe 0 -i {self.txt_path} -i {self.audio_path} -c:v copy -c:a aac {self.final_video_path} -loglevel quiet"
+            # cmd = f"ffmpeg -f concat -safe 0 -i {self.txt_path} -i {self.audio_path} -c:v copy -c:a aac {self.final_video_path} -loglevel quiet"
+            # subprocess.call(cmd, shell=True)
+
+            cmd = f"ffmpeg -f concat -safe 0 -i {self.txt_path} -i {self.audio_path} -vf scale={self.resolution[0]}:{self.resolution[1]} -c:v h264 -c:a aac {self.final_video_path} -loglevel quiet"
             subprocess.call(cmd, shell=True)
 
             # cmd = f'ffmpeg -i {f} -vf "scale={1440}:{720}" -c:a copy ' + assets
