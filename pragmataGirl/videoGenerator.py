@@ -1,11 +1,10 @@
-import json
-
 from pragmataGirl.animator import load_interpolated_keys
 import  multiprocessing as mp
 from PIL import Image
 import numpy as np
 import subprocess
 import time
+import json
 import cv2
 import os
 
@@ -67,7 +66,7 @@ def process(input_path, result_path,referans,rec,keys,start_index,state_path,res
 
 
 class VideoGenerator:
-    def __init__(self,dirctory,file_name,rec):
+    def __init__(self,dirctory,file_name,rec,resolution):
         self.file_name = file_name
         self.rec = rec
         self.dirctory = dirctory
@@ -88,7 +87,7 @@ class VideoGenerator:
         self.audio_path = self.assets_path + "audio.flac"
         self.final_video_path = self.dirctory + self.file_name
         self.type = 'mp4v'
-        self.resolution = self.get_resolution(480)
+        self.resolution = self.get_resolution(resolution)
         self.is_canseld = False
 
 

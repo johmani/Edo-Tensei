@@ -5,11 +5,12 @@
 }
 
 :root {
-	--app-bg: #101827;
+	--app-bg: #141517;
 	--app-content-main-color: #fff;
 	--action-color: #2869ff;
 	--action-color-hover: #6291fd;
-	--app-content-secondary-color: #1d283c;
+	--app-content-secondary-color: #1c29465d;
+	--app-content-tertiary-color:#0b1c445d;
 	--filter-reset: #2c394f;
 
 	--filter-shadow: 0px 0px 4px 4px  #0000005d;
@@ -313,8 +314,6 @@ body {
 }
 
 
-
-
 .products-area-wrapper {
 	width: 100%;
 	max-height: 100%;
@@ -337,9 +336,10 @@ body {
 
 
 .gridView .products-row {
+	background: linear-gradient(165deg, var(--app-content-secondary-color) 0%, var(--app-content-tertiary-color) 100%, rgba(0, 213, 255, 0.164) 100%);
 	margin: 8px;
 	width: calc(25% - 16px);
-	background-color: var(--app-content-secondary-color);
+	/* background-color: var(--app-content-secondary-color); */
 	padding: 8px;
 	border-radius: 4px;
 	cursor: pointer;
@@ -377,25 +377,6 @@ body {
 	.gridView .products-row:hover {
 		transform: none;
 	}
-}
-
-.gridView .products-row .cell-more-button {
-	border: none;
-	padding: 0;
-	border-radius: 4px;
-	position: absolute;
-	top: 16px;
-	right: 16px;
-	z-index: 1;
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	width: 24px;
-	height: 24px;
-	background-color: rgba(16, 24, 39, 0.7);
-	color: #fff;
-	cursor: pointer;
-	display: none;
 }
 
 .gridView .product-cell {

@@ -1,17 +1,14 @@
-import os
-
 from flask import request, send_from_directory, abort, jsonify
 from pragmataGirl.videoGenerator import VideoGenerator
 from flaskServer import app
-import PIL
 import numpy as np
 import base64
 import json
+import PIL
 import cv2
 import io
+import os
 
-
-active_processes = {}
 
 
 @app.route('/submit_pragmata_girl', methods=["POST"])
@@ -35,9 +32,10 @@ def submit_pragmata_girl():
 def pragmata_girl():
     request_data = json.loads(request.data)
     process_key = str(request.access_route[-1]) + ',' + str(request_data.get('sessionNumber'))
+    resolution = int(request_data.get('resolution'))
 
     image = cv2.imread(f"{app.root_path}/client/pragmataGirl/image/{process_key}.png", cv2.IMREAD_UNCHANGED)
-    girl = VideoGenerator(f"{app.root_path}/client/pragmataGirl/video/", f'{process_key}.mp4', image)
+    girl = VideoGenerator(f"{app.root_path}/client/pragmataGirl/video/", f'{process_key}.mp4', image,resolution)
     girl.generate()
 
     if girl.is_canseld:
@@ -56,7 +54,7 @@ def download_pragmata_girl():
         session_number = request.args.get('sessionNumber')
         process_key = f"{request.access_route[-1]},{session_number}"
         name = f"{process_key}.mp4"
-        return send_from_directory(directory=f"{app.root_path}/client/pragmataGirl/video", download_name="pragmata girl.mp4", path=name, as_attachment=False)
+        return send_from_directory(directory=f"{app.root_path}/client/pragmataGirl/video", download_name="pragmata girl.mp4", path=name, as_attachment=True)
     except FileNotFoundError:
         abort(404)
 

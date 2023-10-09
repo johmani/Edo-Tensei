@@ -19,7 +19,7 @@ class DevelopmentConfig(Config):
     ENV = 'development'
     DEBUG = True
     HOST = '127.0.0.1'
-    PORT = 5000
+    PORT = 80
     URL = f'http://{HOST}:{PORT}'
 
 
