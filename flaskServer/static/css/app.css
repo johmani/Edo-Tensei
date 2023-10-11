@@ -7,8 +7,7 @@
 }
 
 :root {
-	--app-gradient-1:rgba(47,0,38,1);
-	--app-gradient-2:rgba(0,27,56,1);
+	--app-bg-single-color: #141517;
 	--app-bg: linear-gradient(-45deg, rgba(47,0,38,1) 0%, rgba(0,27,56,1) 100%);
 	--app-content-main-color: #fff;
 	--action-color: #2869ff;

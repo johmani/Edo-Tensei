@@ -194,7 +194,7 @@
         .inputField {
             width: 95%;
             border: 1px solid var(--action-color-hover);
-            background-color: var(--app-bg);
+            background-color: var(--app-bg-single-color);
             color: var(--app-content-main-color);
 
             border-radius: 5px;
@@ -212,7 +212,7 @@
 
         .dropList {
             border: 1px solid var(--action-color-hover);
-            background-color: var(--app-bg);
+            background-color: var(--app-bg-single-color);
             color: var(--app-content-main-color);
             border-radius: 5px;
             padding: 5px;
@@ -264,7 +264,7 @@
         .textItem {
 
             border: 1px solid var(--action-color-hover);
-            background-color: var(--app-bg);
+            background-color: var(--app-bg-single-color);
             color: var(--app-content-main-color);
             font-size: 15px;
             border-radius: 50px;
