@@ -9,7 +9,7 @@ class Config:
 class ProductionConfig(Config):
     ENV = 'production'
     DEBUG = False
-    HOST = 'johmani.mooo.com'
+    HOST = 'edo-tensei.mooo.com'
     PORT = 443
     URL = "https://" + HOST
 
