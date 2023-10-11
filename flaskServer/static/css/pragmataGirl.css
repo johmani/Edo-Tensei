@@ -4,52 +4,47 @@
 	--tool-radius: 15;
 }
 
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: 'Poppins', sans-serif;
-}
 
-
-.tool-switch {
-    color: var(--app-content-main-color);
-    font-size: 25px;
-    line-height: 32px;
-    margin: 0px 10px 0px 10px;
-    background-color: transparent;
-    border: none;
-    padding: 0;
-    color: var(--app-content-main-color);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    cursor: pointer;
-
-    .tool {
-        fill: var(--app-content-main-color);
-    }
-
-    .tool:hover {
-        fill: var(--action-color-hover);
-        color: var(--action-color-hover);
-    }
-}
-
-.tool-switch.active{
-    .tool {
-        fill: var(--action-color);
-        color: var(--action-color);
-    }
-}
 
 .header-content-actions-wrapper {
+    border: var(--border);
     display: flex;
     align-items: center;
     background-color: var(--app-content-secondary-color);
     padding: 10px;
     border-radius: 10px;
     box-shadow: var(--filter-shadow);
+
+    .tool-switch {
+        color: var(--app-content-main-color);
+        font-size: 25px;
+        line-height: 32px;
+        margin: 0px 10px 0px 10px;
+        background-color: transparent;
+        border: none;
+        padding: 0;
+        color: var(--app-content-main-color);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        cursor: pointer;
+    
+        .tool {
+            fill: var(--app-content-main-color);
+        }
+    
+        .tool:hover {
+            fill: var(--action-color-hover);
+            color: var(--action-color-hover);
+        }
+    }
+    
+    .tool-switch.active{
+        .tool {
+            fill: var(--action-color);
+            color: var(--action-color);
+        }
+    }
 }
 
 .app-content-actions-wrapper {
@@ -93,8 +88,7 @@
     :root {
         --tool-radius: 25;
     }
-    
-    
+      
     .main-content {
         flex-direction: column;
 
@@ -110,7 +104,6 @@
             }
         }
     }
-    
 }
 
 @media screen and (max-width: 520px) {
@@ -118,7 +111,6 @@
     :root {
         --tool-radius: 25;
     }
-    
     
     .main-content {
         flex-direction: column;
@@ -137,10 +129,6 @@
     }
 }
 
-
-
-
-
 .draw-area-wrapper {
     width: 100%;
     max-height: 100%;
@@ -152,9 +140,10 @@
     margin: 10px;
 }
 
-
-
 .veiw-port {
+    
+    box-shadow: 0px 0px 8px #000000;
+    border-radius: 10px;
     background-color: #03dac6;
     width: 100%;
     max-width: 1460px;
@@ -177,9 +166,9 @@
 
 
 .properties {
+    
     overflow: hidden;
     transition: 1s;
-    max-width: 0px;
     max-height: 0px;
 
     color: var(--tertiary-color);
@@ -325,7 +314,6 @@
 }
 
 .properties.active {
-    max-width: 1000px;
     max-height: 1000px;
 
     background-color: var(--app-content-secondary-color);

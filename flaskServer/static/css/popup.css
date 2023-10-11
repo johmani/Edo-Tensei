@@ -1,6 +1,6 @@
 .popup {
     border-radius: 10px;
-    background-color: var(--app-bg);
+    background: var(--app-bg);
     box-shadow: var(--filter-shadow);
     display: none;
     align-content: center;
@@ -9,173 +9,86 @@
     position: fixed;
 
     padding: 10%;
-    width:99%;
-    height:99%;
-   
+    width: 99%;
+    height: 99%;
+
 
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
+}
 
-    .cancelButton{
-        display :none;
+.cancelButton {
+    display: none;
+    color: var(--action-color-hover);
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    font-size: 40px;
+
+    padding-right: 10px;
+}
+
+.cancelButton:hover {
+    color: var(--action-color);
+}
+
+.cancelButton.active {
+    display: block;
+}
+
+.downLoad {
+    position: relative;
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    box-shadow: 0px 0px 10px var(--action-color-hover);
+    display: none;
+    border: 1px solid var(--action-color-hover);
+    text-decoration: none;
+    align-content: center;
+    justify-content: center;
+    align-items: center;
+
+    .bx {
+        font-size: 50px;
         color: var(--action-color-hover);
-        position: absolute;
-        right: 10px;
-        top: 10px;
-        font-size: 40px;
+        padding: 0;
+    }
+}
 
-        padding-right: 10px;
-    }
-    .cancelButton:hover{
-        color:  var(--action-color);
-    }
-    .cancelButton.active{
-        display :block;
-    }
+.downLoad:hover {
+    box-shadow: 0px 0px 10px var(--action-color);
+    border: 1px solid var(--action-color);
+}
 
-    .downLoad {
-        position: relative;
-        width: 100px;
-        height: 100px;
-        border-radius: 50%;
-        box-shadow: 0px 0px 10px var(--action-color-hover);
-        display: none;
-        border: 1px solid var(--action-color-hover);
-        text-decoration: none;
-        align-content: center;
-        justify-content: center;
-        align-items: center;
+.dropList {
+    border: 1px solid var(--action-color-hover);
+    background-color: var(--app-bg);
+    color: var(--app-content-main-color);
+    border-radius: 5px;
+    padding: 5px;
+    padding-right: 10px;
+    padding-left: 10px;
 
-        .bx {
-            font-size: 50px;
-            color: var(--action-color-hover);
-            padding: 0;
-        }
-    }
-    .downLoad.active{
-        display :flex;
-    }
-
-    .downLoad:hover {
-        box-shadow: 0px 0px 10px var(--action-color);
+    &:focus {
+        outline: none;
         border: 1px solid var(--action-color);
-
-        .bx {
-            font-size: 50px;
-            color: var(--action-color);
-            padding: 0;
-        }
-    }
-
-    .dropList {
-        border: 1px solid var(--action-color-hover);
-        background-color: var(--app-bg);
-        color: var(--app-content-main-color);
-        border-radius: 5px;
-        padding: 5px;
-        padding-right: 10px;
-        padding-left: 10px;
-
-        &:focus {
-            outline: none;
-            border: 1px solid var(--action-color);
-        }
-    }
-
-    .processing-container {
-        display: none;
-        height: 200px;
-        width: 200px;
-        position: absolute;
-        justify-content: center;
-        align-items: center;
-    
-        .processing {
-            position: relative;
-            width: 200px;
-            height: 200px;
-            border-radius: 100%;
-            border: 2px solid transparent;
-            border-color: transparent #fff transparent #FFF;
-            -moz-animation: rotate-processing 1.5s linear 0s infinite normal;
-            -moz-transform-origin: 50% 50%;
-            -o-animation: rotate-processing 1.5s linear 0s infinite normal;
-            -o-transform-origin: 50% 50%;
-            -webkit-animation: rotate-processing 1.5s linear 0s infinite normal;
-            -webkit-transform-origin: 50% 50%;
-            animation: rotate-processing 1.5s linear 0s infinite normal;
-            transform-origin: 50% 50%;
-        
-            -webkit-transition: all 0.5s ease-in-out;
-            -moz-transition: all 0.5s ease-in-out;
-            -ms-transition: all 0.5s ease-in-out;
-            -o-transition: all 0.5s ease-in-out;
-            transition: all 0.5s ease-in-out;
-        }
-        
-        
-        .processing-text {
-            position: absolute;
-            -moz-animation: processing-text-opacity 2s linear 0s infinite normal;
-            -o-animation: processing-text-opacity 2s linear 0s infinite normal;
-            -webkit-animation: processing-text-opacity 2s linear 0s infinite normal;
-            animation: processing-text-opacity 2s linear 0s infinite normal;
-            color: #ffffff;
-            font-family: "Helvetica Neue, " Helvetica", " "arial";
-            font-size: 20px;
-            font-weight: bold;
-            opacity: 0;
-            text-transform: uppercase;
-        }
-    }
-    .processing-container.active{
-        display :flex;
-    }
-}
-
-
-
-.popup.active{
-    display :flex;
-}
-
-@keyframes rotate-processing {
-    0% {
-        transform: rotate(0deg);
-    }
-
-    100% {
-        transform: rotate(360deg);
-    }
-}
-
-@keyframes processing-text-opacity {
-    0% {
-        opacity: 0
-    }
-
-    20% {
-        opacity: 0
-    }
-
-    50% {
-        opacity: 1
-    }
-
-    100% {
-        opacity: 0
     }
 }
 
 
 
 
-.videoSetting{
+
+
+
+
+.videoSetting {
     display: none;
     flex-direction: column;
 
-    .dropList{   
+    .dropList {
         margin: 10px;
     }
 
@@ -183,7 +96,7 @@
         cursor: pointer;
     }
 
-    .send-button{
+    .send-button {
         display: flex;
         margin: 10px;
         justify-content: center;
@@ -194,7 +107,7 @@
         border-radius: 5px;
         color: var(--app-content-main-color);
         background-color: var(--action-color-hover);
-       
+
         color: var(--app-content-main-color);
         cursor: pointer;
     }
@@ -202,11 +115,11 @@
     .send-button:hover {
         background-color: var(--action-color);
     }
-    
+
 }
 
 
 
-.videoSetting.active{
+.active {
     display: flex;
 }

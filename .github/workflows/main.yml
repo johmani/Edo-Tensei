@@ -27,9 +27,12 @@ jobs:
           git pull origin main
           git status
           pkill gunicorn
+          pkill -P1 gunicorn
           source env/bin/activate
+          rm nohup.out
           nohup gunicorn -w 10 -t 600 -b 127.0.0.1:1024 wsgi:app &
           cat nohup.out
+          deactivate
 
           
           

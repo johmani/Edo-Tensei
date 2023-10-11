@@ -8,12 +8,13 @@
     <!-- <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests"> -->
 
     <!----======== CSS ======== -->
-    <link rel="stylesheet" href="/static/css/index_style.css" />
-    <link rel="stylesheet" href="/static/css/style.css" />
+    <link rel="stylesheet" href="/static/css/app.css" />
+    <link rel="stylesheet" href="/static/css/pragmataGirl.css" />
     <link rel="stylesheet" href="/static/css/popup.css" />
+    <link rel="stylesheet" href="/static/css/components/animations/processing-animation.css" />
 
 
-    <!----===== Boxicons  CSS ===== -->
+    <!----===== icons  CSS ===== -->
     <link rel="stylesheet" href="https://unpkg.com/boxicons@2.1.1/css/boxicons.min.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css">
 
@@ -38,14 +39,14 @@
     <div class="app-container">
         <div class="app-content">
 
-            <nav class="app-content-header">
+            <header>
 
                 <a href="/" class="tool-switch" id="back" title="back to home"
-                    style="margin-left: 0; text-decoration: none;">
+                    style="margin-left: 0; text-decoration: none; font-size: var(--h1-size);">
                     <i class="tool fa-regular fa-circle-left fa-fade"></i>
                 </a>
 
-                <div style="display: flex;">
+                <div style="display: flex; gap: 10px;">
 
                     <div class="header-content-actions-wrapper">
 
@@ -65,17 +66,9 @@
                             <i class="tool bx bx-move icon"></i>
                         </button>
 
-
-                        <!-- <button class="mode-switch" title="Switch Theme">
-                        <svg class="moon" fill="none" stroke="currentColor" stroke-linecap="round"
-                            stroke-linejoin="round" stroke-width="2" width="24" height="24" viewBox="0 0 24 24">
-                            <defs></defs>
-                            <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
-                        </svg>
-                    </button> -->
                     </div>
 
-                    <div class="header-content-actions-wrapper" style="margin-left: 10px;">
+                    <div class="header-content-actions-wrapper">
                         <button class="tool-switch" id="applyButton" title="submitt and generate video"
                             style="margin: 0px;">
                             <i class="tool bx bx-rocket icon"></i>
@@ -83,7 +76,7 @@
                     </div>
 
                 </div>
-            </nav>
+            </header>
 
             <div class="main-content">
                 <div class="draw-area-wrapper">
@@ -178,10 +171,20 @@
                 </div>
                 
                 <div class="processing-container" id="processing-container">
-                    <div class="processing"></div>
-                    <div class="processing-text">processing</div>
+                    <div class="processing-animation">
+                        <div class="loop cubes">
+                            <div class="item cubes"></div>
+                            <div class="item cubes"></div>
+                            <div class="item cubes"></div>
+                            <div class="item cubes"></div>
+                            <div class="item cubes"></div>
+                            <div class="item cubes"></div>
+                        </div>
+                    </div>
+                    <h2>PROCESSING</h2>
+                    <p>Wait a minute</p>
                 </div>
-
+                
                 <a href="#" class="downLoad" id="downLoad">
                     <i class="bx bx-download icon"></i>
                 </a>

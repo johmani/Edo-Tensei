@@ -1,0 +1,39 @@
+.main-content{
+    display: flex; 
+    flex-direction: column;
+    align-content: center; 
+    justify-content: center; 
+    align-items: center;
+    margin-top: 40px;
+
+
+    .contact {
+        width: 80%;
+        height: 40px;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+    
+        gap: 20px; 
+    
+        .n {
+            margin: 0px;
+            padding: 0px;
+            width: 40px;
+            height: 40px;
+           
+    
+            .icon {
+                margin: 0px;
+                padding: 0px;
+                width: 40px;
+                height: 40px;
+    
+                outline: none;
+                box-shadow: none;
+            }
+        }
+    }
+}
+

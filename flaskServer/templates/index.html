@@ -7,13 +7,9 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    
-    <link rel="stylesheet" href="/static/css/index_style.css" media="screen">
-
-    <!----===== Boxicons  CSS ===== -->
-    <link rel="stylesheet" href="https://unpkg.com/boxicons@2.1.1/css/boxicons.min.css" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css">
-
+    <!----===== CSS ===== -->
+    <link rel="stylesheet" href="/static/css/app.css" media="screen">
+    <link rel="stylesheet" href="/static/css/index.css" media="screen">
     
     <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-3KPBQER1K9"></script>
@@ -31,93 +27,38 @@
 <body>
     <div class="app-container">
         <div class="app-content">
-            <nav class="app-content-header">
-                <!-- <img src="/static/images/logo_inv.png" style="width: 20px;height: 30px; margin: 0px 10px 0px 0px;"> -->
-                <h1 class="app-content-headerText">Edo Tensei</h1>
-                
-                <div class="app-content-actions-wrapper">
-                    <a href="about" class="nav-item">About</a>
 
-                    <!-- <button class="mode-switch" title="Switch Theme">
-                        <svg class="moon" fill="none" stroke="currentColor" stroke-linecap="round"
-                            stroke-linejoin="round" stroke-width="2" width="24" height="24" viewBox="0 0 24 24">
-                            <defs></defs>
-                            <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
-                        </svg>
-                    </button> -->
+            <header>
 
+                <div class="left-header">
+                    <svg version="1.0" xmlns="http://www.w3.org/2000/svg" width="25.000000pt" height="25.000000pt" viewBox="0 0 40.000000 40.000000"preserveAspectRatio="xMidYMid meet">
+                        <g transform="translate(0.000000,40.000000) scale(0.008989,-0.008949)" fill="var(--app-content-main-color)" stroke="none"> 
+                            <path d="M2005 4440 c-108 -12 -264 -39 -325 -56 -116 -34 -217 -66 -265 -86 -107 -44 -324 -155 -394 -203 -40 -27 -83 -57 -95 -65 -172 -117 -396 -347 -527 -540 -80 -116 -79 -115 -152 -266 -32 -65 -63 -127 -68 -137 -24 -44 -93 -275 -122 -402 -31 -139 -31 -142 -31 -440 -1 -292 0 -303 27 -430 59 -273 144 -495 265 -690 17 -27 39 -63 48 -80 41 -72 191 -260 284 -355 34 -35 175 -158 230 -201 127 -99 387 -248 515 -293 285 -103 452 -139 709 -156 191 -12 460 12 621 56 331 89 513 172 775 351 195 134 457 410 582 613 139 226 240 470 290 705 60 276 63 655 8 915 -101 482 -332 881 -706 1221 -52 47 -212 169 -223 169 -4 0 -16 9 -26 20 -10 11 -27 22 -37 26 -11 3 -36 17 -55 30 -19 12 -80 45 -136 72 -204 99 -372 157 -547 187 -47 8 -107 20 -135 26 -63 13 -416 20 -510 9z m364 -95 c125 -14 168 -26 156 -45 -3 -4 -17 -11 -32 -15 -14 -3 -56 -20 -92 -37 -36 -17 -84 -39 -106 -49 -43 -20 -46 -22 -150 -88 -218 -139 -380 -331 -443 -526 -24 -73 -61 -252 -73 -355 -5 -41 -14 -217 -19 -390 -5 -173 -14 -359 -19 -412 -16 -159 -70 -357 -119 -438 -86 -141 -169 -220 -307 -293 -65 -35 -140 -67 -157 -67 -7 -1 -31 -8 -53 -16 -36 -13 -103 -26 -280 -54 -33 -5 -141 -10 -241 -10 -179 0 -181 0 -204 25 -34 36 -83 239 -111 455 -15 113 -6 430 15 540 33 168 59 269 94 370 65 181 185 407 289 545 13 17 26 35 30 40 159 210 375 399 633 552 229 137 554 239 830 262 154 13 201 17 215 19 6 1 70 -5 144 -13z m451 -81 c47 -14 108 -35 135 -46 28 -11 68 -28 89 -37 120 -49 310 -155 387 -215 15 -12 39 -30 55 -41 249 -176 520 -515 653 -815 18 -41 37 -84 42 -95 28 -65 81 -241 99 -330 42 -216 43 -234 44 -440 0 -162 -4 -233 -18 -310 -50 -274 -98 -421 -204 -633 -63 -123 -70 -135 -127 -221 -28 -40 -58 -85 -67 -99 -16 -25 -65 -58 -74 -50 -2 3 1 20 7 39 16 54 22 295 10 389 -18 141 -63 306 -105 385 -9 17 -16 33 -16 38 0 6 -71 132 -125 220 -42 69 -131 185 -189 245 -95 100 -181 164 -321 241 -71 39 -137 76 -145 81 -8 5 -38 23 -66 39 -28 16 -71 44 -95 61 -24 17 -60 41 -79 54 -34 23 -180 163 -210 202 -17 21 -67 102 -93 151 -34 63 -65 180 -78 293 -10 99 -10 134 4 250 19 155 46 249 106 370 65 129 109 196 185 278 36 38 53 38 196 -4z m-446 -1649 c113 -43 188 -110 239 -215 29 -61 32 -72 31 -170 0 -94 -3 -111 -28 -162 -35 -74 -112 -158 -179 -196 -105 -59 -268 -63 -376 -7 -114 58 -208 189 -225 315 -19 139 60 312 178 388 114 74 243 91 360 47z m694 -969 c277 -85 483 -270 633 -566 41 -80 79 -188 79 -222 0 -68 -285 -312 -525 -450 -79 -45 -252 -128 -268 -128 -6 0 -24 -6 -38 -14 -33 -17 -211 -69 -309 -90 -240 -51 -610 -50 -860 4 -326 69 -667 235 -904 440 -260 224 -466 494 -576 753 -17 40 -35 80 -40 89 -14 26 -13 28 16 28 14 0 43 -13 64 -30 77 -61 317 -172 435 -201 22 -6 78 -20 125 -32 74 -18 112 -21 300 -21 126 1 231 5 255 12 22 6 66 18 97 26 62 15 83 24 283 121 72 34 153 73 180 85 28 12 64 28 80 35 121 55 145 65 152 65 4 0 20 6 35 14 14 8 43 19 65 26 21 7 43 16 48 20 16 11 155 52 210 61 28 4 124 6 215 4 142 -3 176 -7 248 -29z"/>
+                        </g>
+                    </svg>
+                    <h1>Edo Tensei</h1>
                 </div>
-            </nav>
-            <div class="app-content-actions">
-                
+
+                <nav>
+                    <li><a href="about" class="nav-item">About</a></li>
+                </nav>
+
+            </header>
+
+            <div class="app-content-actions">                
                 <input class="search-bar non-interactable" placeholder="Search..." type="text">
-
-                <div class="app-content-actions-wrapper">
-                  
-                    <div class="filter-button-wrapper non-interactable">
-                        <button class="action-button filter jsFilter"><span>Filter</span><svg
-                                xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
-                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                stroke-linejoin="round" class="feather feather-filter">
-                                <polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3" />
-                            </svg></button>
-                        <div class="filter-menu">
-                            <label>Category</label>
-                            <select>
-                                <option>All Categories</option>
-                                <option>Furniture</option>
-                                <option>Decoration</option>
-                                <option>Kitchen</option>
-                                <option>Bathroom</option>
-                            </select>
-                            <label>Status</label>
-                            <select>
-                                <option>All Status</option>
-                                <option>Active</option>
-                                <option>Disabled</option>
-                            </select>
-                            <div class="filter-menu-buttons">
-                                <button class="filter-button reset">
-                                    Reset
-                                </button>
-                                <button class="filter-button apply">
-                                    Apply
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
             </div>
+            
             <div class="products-area-wrapper gridView">
 
-                
                 <div class="products-row">
                     <div class="product-cell image">
                         <a href="pragmataGirl">
-                            <img src="/static/images/pragmata girl.png" alt="product">
+                            <img src="/static/images/girl-text.jpg" alt="product">
                         </a>
                         <span>Pragmata girl</span>
                     </div>
-
-                    <!-- <div class="product-cell info">
-                        <div class="info">
-                            <i id="download" class="bx bx-download icon"></i>
-                            <span class="cell-label">0</span>
-                        </div>
-
-                        <div class="info">
-                            <i id="like" class="bx bx-like icon"></i>
-                            <span class="cell-label">0</span>
-                        </div>
-                        
-                        <div class="info">
-                            <i id="dislike" class="bx bx-dislike icon"></i>
-                            <span class="cell-label">0</span>
-                        </div>
-                    </div> -->
                 </div>
-
 
             </div>
         </div>
