@@ -13,7 +13,7 @@
     background-color: var(--app-content-secondary-color);
     padding: 10px;
     border-radius: 10px;
-    box-shadow: var(--filter-shadow);
+    /* box-shadow: var(--filter-shadow); */
 
     .tool-switch {
         color: var(--app-content-main-color);
@@ -156,7 +156,6 @@
     border: 1px solid var(--action-color-hover);
     color: var(--app-content-main-color);
     border-radius: 15px 15px 0px 0px;
-    box-shadow: 0px 0px 3px var(--action-color-hover);
     padding: 5px;
     margin: 5px;
     display: flex;
@@ -194,7 +193,7 @@
         .inputField {
             width: 95%;
             border: 1px solid var(--action-color-hover);
-            background-color: var(--app-bg-single-color);
+            background-color: var(--app-bg);
             color: var(--app-content-main-color);
 
             border-radius: 5px;
@@ -212,7 +211,7 @@
 
         .dropList {
             border: 1px solid var(--action-color-hover);
-            background-color: var(--app-bg-single-color);
+            background-color: var(--app-bg);
             color: var(--app-content-main-color);
             border-radius: 5px;
             padding: 5px;
@@ -264,7 +263,7 @@
         .textItem {
 
             border: 1px solid var(--action-color-hover);
-            background-color: var(--app-bg-single-color);
+            background-color: var(--app-bg);
             color: var(--app-content-main-color);
             font-size: 15px;
             border-radius: 50px;
@@ -317,6 +316,6 @@
     max-height: 1000px;
 
     background-color: var(--app-content-secondary-color);
-    box-shadow: var(--filter-shadow);
+
 }
 

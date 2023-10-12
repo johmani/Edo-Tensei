@@ -18,7 +18,7 @@ class ProductionConfig(Config):
 class DevelopmentConfig(Config):
     ENV = 'development'
     DEBUG = True
-    HOST = '18.0.1.12'
+    HOST = '18.0.1.15'
     PORT = 80
     URL = f'http://{HOST}:{PORT}'
 

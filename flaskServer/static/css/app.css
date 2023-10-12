@@ -7,22 +7,17 @@
 }
 
 :root {
-	--app-bg-single-color: #141517;
-	--app-bg: linear-gradient(-45deg, rgba(47,0,38,1) 0%, rgba(0,27,56,1) 100%);
-	--app-content-main-color: #fff;
-	--action-color: #2869ff;
-	--action-color-hover: #6291fd;
-	--app-content-secondary-color: #0f2a6181;
-	--app-content-tertiary-color:#0b1c445d;
-	--filter-reset: #2c394f;
-	--border: 1px solid #00397a;
-
-	--filter-shadow: 0px 0px 4px 4px  #0000005d;
-
-
-	--h1-size: 25px;
-	--h2-size: 20px;
-	--p-size: 14px;
+    --app-bg: #1e1f26;
+    --app-content-main-color: #fff;
+    --action-color: #2869ff;
+    --action-color-hover: #6291fd;
+    --app-content-secondary-color: #0D1117;
+    --border: 1px solid #00397a;
+    /* --filter-shadow: 0px 0px 4px 4px #0052725d; */
+    --h1-size: 25px;
+    --h2-size: 20px;
+    --p-size: 14px;
+	
 }
 
 
@@ -79,14 +74,14 @@ body {
 
 	.app-content {
 		padding: 10px;
-		background: var(--app-bg);
+		background-color: var(--app-bg);
 		height: 100%;
 		flex: 1;
 		max-height: 100%;
 		display: flex;
 		flex-direction: column;
 	
-		background: var(--app-bg)
+		background-color: var(--app-bg)
 	}
 }
 
