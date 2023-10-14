@@ -7,13 +7,18 @@
 }
 
 :root {
-    --app-bg: #1e1f26;
+    --app-bg: #171923;
     --app-content-main-color: #fff;
+    --app-content-secondary-color: #2D3748;
+	--app-content-tertiary-color: #1A202C;
+
     --action-color: #2869ff;
     --action-color-hover: #6291fd;
-    --app-content-secondary-color: #0D1117;
     --border: 1px solid #00397a;
-    /* --filter-shadow: 0px 0px 4px 4px #0052725d; */
+
+	--box-shadow-inset :inset 0px 5px 15px -10px black;
+   
+	/* --filter-shadow: 0px 0px 4px 4px #0052725d; */
     --h1-size: 25px;
     --h2-size: 20px;
     --p-size: 14px;
@@ -81,16 +86,19 @@ body {
 		display: flex;
 		flex-direction: column;
 	
-		background-color: var(--app-bg)
+		background-color: var(--app-bg);
+
+		box-shadow: var(--box-shadow-inset);
 	}
 }
 
 
 header {
+	background-color: var(--app-content-tertiary-color);
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
-	padding: 0 4px;
+	padding: 10px;
 }
 
 nav {

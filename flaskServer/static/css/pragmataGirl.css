@@ -314,8 +314,6 @@
 
 .properties.active {
     max-height: 1000px;
-
     background-color: var(--app-content-secondary-color);
-
 }
 
